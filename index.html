@@ -129,13 +129,17 @@
 <body>
   <div class="header">
     <!-- Logo removed as requested -->
-  <span class="header-title" style="margin:0 auto;">TDM Classification and Masking JSON Viewer</span>
+    <span class="header-title" style="margin:0 auto;">TDM Classification and Masking JSON Viewer</span>
     <span style="position:absolute;right:32px;top:18px;font-size:1.4em;color:#fff;opacity:0.5;font-weight:700;letter-spacing:1px;pointer-events:none;">Beta Dev Usage</span>
+    <button id="howToUseBtn" title="How to Use Guide" style="position:absolute;right:8px;top:18px;background:none;border:none;cursor:pointer;padding:0;margin:0;z-index:1001;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="12" fill="#fff" opacity="0.85"/>
+        <circle cx="12" cy="12" r="10" fill="#c00" opacity="0.9"/>
+        <text x="12" y="16" text-anchor="middle" fill="#fff" font-size="13" font-family="Segoe UI, Arial, sans-serif" font-weight="bold">i</text>
+      </svg>
+    </button>
   </div>
   <div class="container">
-        <div style="text-align:right; margin-bottom:12px;">
-          <button id="howToUseBtn" style="background:#fff;color:#c00;border:2px solid #c00;padding:8px 18px;border-radius:6px;font-weight:600;cursor:pointer;">How to Use Guide</button>
-        </div>
     <div class="tab-bar" style="display:flex; gap:2px; margin-bottom:24px; border-bottom:2px solid #c00;">
       <button id="tabClassification" class="tab-btn active" style="flex:1; padding:12px; background:#c00; color:#fff; border:none; font-weight:600; cursor:pointer;">Classification</button>
       <button id="tabMasking" class="tab-btn" style="flex:1; padding:12px; background:#fff; color:#c00; border:none; font-weight:600; cursor:pointer;">Masking Map</button>
