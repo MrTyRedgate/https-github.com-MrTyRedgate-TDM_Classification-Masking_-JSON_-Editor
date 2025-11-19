@@ -507,14 +507,19 @@
       reader.onload = function(evt) {
         try {
           maskingData = JSON.parse(evt.target.result);
-          maskingTables = maskingData.tables || [];
-          renderMaskingMap();
-          // Save to sessionStorage
-          sessionStorage.setItem('maskingJson', evt.target.result);
-          showUploadSuccess('masking');
         } catch (err) {
-          alert('Invalid masking.json file.');
+          alert('The file is not valid JSON. Please upload a valid masking.json file.');
+          return;
         }
+        if (!maskingData || !Array.isArray(maskingData.tables)) {
+          alert('The file is missing required structure. Expected a "tables" array in the root object.');
+          return;
+        }
+        maskingTables = maskingData.tables;
+        renderMaskingMap();
+        // Save to sessionStorage
+        sessionStorage.setItem('maskingJson', evt.target.result);
+        showUploadSuccess('masking');
       };
       // Show upload success message and navigation prompt
       function showUploadSuccess(type) {
