@@ -10,9 +10,11 @@ This is a free to use tool built by Solution Engineering to assist with understa
 - Session persistence for uploaded files
 - Advanced filtering switches for quick table views
 
-## Usage
-1. Upload your own `classification.json` and `masking.json` files using the JSON Upload tab.
-2. Use the Classification and Masking tabs to explore and filter your data.
+## Getting Started
+1. Open the `index.html` file in your web browser to start using the viewer.
+2. Upload your own `classification.json` and `masking.json` files using the JSON Upload tab.
+3. Use the Classification and Masking tabs to explore and filter your data.
+4. After making any changes, remember to sync everything in git (commit and push) to keep your repository up to date.
 
 > **Note:** The JSON files provided in this repository are dummy test files for illustration purposes only. Please use your own files for real data and analysis.
 
