@@ -525,10 +525,6 @@
         const prevMsg = document.getElementById('uploadSuccessMsg');
         if (prevMsg) prevMsg.remove();
         tabContentSettings.insertAdjacentHTML('beforeend', msg);
-        setTimeout(() => {
-          const msgEl = document.getElementById('uploadSuccessMsg');
-          if (msgEl) msgEl.remove();
-        }, 5000);
       }
       reader.readAsText(file);
     });
