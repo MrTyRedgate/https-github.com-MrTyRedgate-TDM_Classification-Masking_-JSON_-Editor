@@ -521,16 +521,16 @@
         sessionStorage.setItem('maskingJson', evt.target.result);
         showUploadSuccess('masking');
       };
-      // Show upload success message and navigation prompt
-      function showUploadSuccess(type) {
-        const tabContentSettings = document.getElementById('tabContentSettings');
-        let msg = '';
-        msg = '<div id="uploadSuccessMsg" style="margin-top:24px;color:#090;background:#e6ffe6;padding:16px 18px;border-radius:8px;font-size:1.08em;font-weight:500;">Successfully uploaded <b>classification.json</b> or <b>masking.json</b>!<br><span style="color:#333;">Once both files are uploaded, you can explore the <b>Classification</b> and <b>Masking Map</b> tabs above.</span></div>';
-        // Remove any previous success message
-        const prevMsg = document.getElementById('uploadSuccessMsg');
-        if (prevMsg) prevMsg.remove();
-        tabContentSettings.insertAdjacentHTML('beforeend', msg);
-      }
+// Show upload success message and navigation prompt
+function showUploadSuccess(type) {
+  const tabContentSettings = document.getElementById('tabContentSettings');
+  let msg = '';
+  msg = '<div id="uploadSuccessMsg" style="margin-top:24px;color:#090;background:#e6ffe6;padding:16px 18px;border-radius:8px;font-size:1.08em;font-weight:500;">Successfully uploaded <b>classification.json</b> or <b>masking.json</b>!<br><span style="color:#333;">Once both files are uploaded, you can explore the <b>Classification</b> and <b>Masking Map</b> tabs above.</span></div>';
+  // Remove any previous success message
+  const prevMsg = document.getElementById('uploadSuccessMsg');
+  if (prevMsg) prevMsg.remove();
+  tabContentSettings.insertAdjacentHTML('beforeend', msg);
+}
       reader.readAsText(file);
     });
 
