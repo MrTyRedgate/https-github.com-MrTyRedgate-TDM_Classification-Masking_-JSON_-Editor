@@ -529,7 +529,8 @@ function showUploadSuccess(type) {
   // Remove any previous success message
   const prevMsg = document.getElementById('uploadSuccessMsg');
   if (prevMsg) prevMsg.remove();
-  tabContentSettings.insertAdjacentHTML('beforeend', msg);
+  tabContentSettings.querySelectorAll('#uploadSuccessMsg').forEach(el => el.remove());
+  tabContentSettings.insertAdjacentHTML('afterbegin', msg);
 }
       reader.readAsText(file);
     });
