@@ -3,7 +3,7 @@
 
 **Beta Tool Notice**
 
-This is a free to use tool built by Solution Engineering to assist with understanding the JSON outputs from the CLI. This viewer is provided as a purely Beta tool for viewing and exploring TDM classification and masking JSON files. No support or warranty is provided for this tool. Use at your own risk.
+This is a free to use tool to assist with understanding the JSON outputs from the CLI. This viewer is provided as a purely Beta tool for viewing and exploring TDM classification and masking JSON files. No support or warranty is provided for this tool. Use at your own risk.
 
 ## Features
 - View and filter classification and masking JSON files
