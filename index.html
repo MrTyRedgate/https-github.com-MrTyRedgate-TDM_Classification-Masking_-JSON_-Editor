@@ -212,7 +212,16 @@
       <div id="maskingMapContent"></div>
     </div>
     <div id="tabContentSettings" style="display:none;">
-        <!-- ...existing code for tabContentSettings... -->
+      <div style="text-align:center; margin-top:40px;">
+        <div style="margin-bottom:24px;">
+          <label for="jsonFile" style="font-weight:600;color:#c00;">Select classification.json: </label>
+          <input type="file" id="jsonFile" accept="application/json">
+        </div>
+        <div>
+          <label for="maskingFile" style="font-weight:600;color:#c00;">Select masking.json: </label>
+          <input type="file" id="maskingFile" accept="application/json">
+        </div>
+      </div>
     </div>
     <div id="howToUseModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.35);z-index:2000;align-items:center;justify-content:center;">
       <div style="background:#fff;border-radius:12px;max-width:520px;padding:36px 32px;box-shadow:0 2px 18px rgba(200,0,0,0.18);margin:auto;position:relative;">
@@ -224,17 +233,6 @@
           <li><b>Filter & Search:</b> Use the filtering options and search boxes to narrow down tables and columns. The <b>Show</b> switch lets you quickly view all tables, only those with classification/masking, or only those without.</li>
           <li><b>Session Persistence:</b> Uploaded files are remembered until you close the browser.</li>
         </ul>
-      </div>
-    </div>
-      <div style="text-align:center; margin-top:40px;">
-        <div style="margin-bottom:24px;">
-          <label for="jsonFile" style="font-weight:600;color:#c00;">Select classification.json: </label>
-          <input type="file" id="jsonFile" accept="application/json">
-        </div>
-        <div>
-          <label for="maskingFile" style="font-weight:600;color:#c00;">Select masking.json: </label>
-          <input type="file" id="maskingFile" accept="application/json">
-        </div>
       </div>
     </div>
   </div>
