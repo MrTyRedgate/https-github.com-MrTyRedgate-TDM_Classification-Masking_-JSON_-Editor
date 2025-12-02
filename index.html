@@ -2396,42 +2396,68 @@
         subsetStaticDataTables = [];
         subsetManualRelationships = [];
 
-        // Parse startingTables
+        // Parse startingTables - handle both flat and nested table object formats
         if (jsonData.startingTables && Array.isArray(jsonData.startingTables)) {
-          subsetStartingTables = jsonData.startingTables.map(st => ({
-            tableName: st.tableName || '',
-            schemaName: st.schemaName || 'dbo',
-            filterClause: st.filterClause || '',
-            forwardRelationshipsOnly: st.forwardRelationshipsOnly || false
-          }));
+          subsetStartingTables = jsonData.startingTables.map(st => {
+            // Handle nested table object format: { table: { schema, name }, filterClause, ... }
+            if (st.table && typeof st.table === 'object') {
+              return {
+                tableName: st.table.name || '',
+                schemaName: st.table.schema || 'dbo',
+                filterClause: st.filterClause || '',
+                forwardRelationshipsOnly: st.forwardRelationshipsOnly || false
+              };
+            }
+            // Handle flat format: { tableName, schemaName, filterClause, ... }
+            return {
+              tableName: st.tableName || st.name || '',
+              schemaName: st.schemaName || st.schema || 'dbo',
+              filterClause: st.filterClause || '',
+              forwardRelationshipsOnly: st.forwardRelationshipsOnly || false
+            };
+          });
         }
 
-        // Parse excludedTables
+        // Parse excludedTables - handle both flat and nested formats
         if (jsonData.excludedTables && Array.isArray(jsonData.excludedTables)) {
           subsetExcludedTables = jsonData.excludedTables.map(et => ({
-            tableName: et.tableName || '',
-            schemaName: et.schemaName || 'dbo'
+            tableName: et.tableName || et.name || '',
+            schemaName: et.schemaName || et.schema || 'dbo'
           }));
         }
 
-        // Parse staticDataTables
+        // Parse staticDataTables - handle both flat and nested formats
         if (jsonData.staticDataTables && Array.isArray(jsonData.staticDataTables)) {
           subsetStaticDataTables = jsonData.staticDataTables.map(st => ({
-            tableName: st.tableName || '',
-            schemaName: st.schemaName || 'dbo'
+            tableName: st.tableName || st.name || '',
+            schemaName: st.schemaName || st.schema || 'dbo'
           }));
         }
 
-        // Parse manualRelationships
+        // Parse manualRelationships - handle both flat and nested formats
         if (jsonData.manualRelationships && Array.isArray(jsonData.manualRelationships)) {
-          subsetManualRelationships = jsonData.manualRelationships.map(mr => ({
-            sourceTableName: mr.sourceTableName || '',
-            sourceSchemaName: mr.sourceSchemaName || 'dbo',
-            sourceColumnNames: Array.isArray(mr.sourceColumnNames) ? mr.sourceColumnNames.join(', ') : '',
-            targetTableName: mr.targetTableName || '',
-            targetSchemaName: mr.targetSchemaName || 'dbo',
-            targetColumnNames: Array.isArray(mr.targetColumnNames) ? mr.targetColumnNames.join(', ') : ''
-          }));
+          subsetManualRelationships = jsonData.manualRelationships.map(mr => {
+            // Handle nested format: { sourceTable: { schema, name }, sourceColumns: [], ... }
+            if (mr.sourceTable && typeof mr.sourceTable === 'object') {
+              return {
+                sourceTableName: mr.sourceTable.name || '',
+                sourceSchemaName: mr.sourceTable.schema || 'dbo',
+                sourceColumnNames: Array.isArray(mr.sourceColumns) ? mr.sourceColumns.join(', ') : '',
+                targetTableName: mr.targetTable?.name || '',
+                targetSchemaName: mr.targetTable?.schema || 'dbo',
+                targetColumnNames: Array.isArray(mr.targetColumns) ? mr.targetColumns.join(', ') : ''
+              };
+            }
+            // Handle flat format: { sourceTableName, sourceSchemaName, sourceColumnNames, ... }
+            return {
+              sourceTableName: mr.sourceTableName || '',
+              sourceSchemaName: mr.sourceSchemaName || 'dbo',
+              sourceColumnNames: Array.isArray(mr.sourceColumnNames) ? mr.sourceColumnNames.join(', ') : (mr.sourceColumnNames || ''),
+              targetTableName: mr.targetTableName || '',
+              targetSchemaName: mr.targetSchemaName || 'dbo',
+              targetColumnNames: Array.isArray(mr.targetColumnNames) ? mr.targetColumnNames.join(', ') : (mr.targetColumnNames || '')
+            };
+          });
         }
 
         // Parse settings
