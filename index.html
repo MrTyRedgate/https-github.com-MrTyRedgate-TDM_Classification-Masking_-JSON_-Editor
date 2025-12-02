@@ -1095,6 +1095,20 @@
             </div>
           </div>
         </div>
+        
+        <!-- Forget All Files Section -->
+        <div style="margin-top:32px; padding-top:24px; border-top:2px dashed #ddd;">
+          <h3 style="color:#c00; margin-bottom:12px;">Reset / Start Fresh</h3>
+          <p style="color:#888; font-size:0.95em; margin-bottom:16px;">
+            Clear all uploaded files from session storage to start with a fresh batch of files.
+          </p>
+          <button id="forgetAllFilesBtn" style="padding:12px 24px; background:#c00; color:#fff; border:none; border-radius:6px; font-size:1em; font-weight:600; cursor:pointer;">
+            🗑️ Forget All Uploaded Files
+          </button>
+          <p style="color:#999; font-size:0.85em; margin-top:12px;">
+            This will clear classification.json, masking.json, and any pending changes from your browser session.
+          </p>
+        </div>
       </div>
     </div>
     
@@ -2495,6 +2509,68 @@
           };
           
           reader.readAsText(file);
+        });
+      }
+
+      // Forget All Files button handler
+      const forgetAllFilesBtn = document.getElementById('forgetAllFilesBtn');
+      if (forgetAllFilesBtn) {
+        forgetAllFilesBtn.addEventListener('click', function() {
+          if (!confirm('Are you sure you want to forget all uploaded files?\n\nThis will clear:\n• classification.json\n• masking.json\n• All pending changes\n\nThis cannot be undone.')) {
+            return;
+          }
+          
+          // Clear session storage
+          sessionStorage.removeItem('classificationJson');
+          sessionStorage.removeItem('maskingJson');
+          
+          // Reset application state
+          data = null;
+          originalData = null;
+          tables = [];
+          tableNames = [];
+          schemaList = [];
+          typeList = [];
+          maskingData = null;
+          originalMaskingData = null;
+          maskingTables = [];
+          
+          // Clear pending changes
+          pendingChanges = {
+            classification: {},
+            masking: {}
+          };
+          updateChangesBar();
+          
+          // Clear file inputs
+          const jsonFileInput = document.getElementById('jsonFile');
+          const maskingFileInput = document.getElementById('maskingFile');
+          const maskingOptionsInput = document.getElementById('maskingOptionsFile');
+          const subsetOptionsInput = document.getElementById('subsetOptionsFile');
+          if (jsonFileInput) jsonFileInput.value = '';
+          if (maskingFileInput) maskingFileInput.value = '';
+          if (maskingOptionsInput) maskingOptionsInput.value = '';
+          if (subsetOptionsInput) subsetOptionsInput.value = '';
+          
+          // Clear status messages
+          const maskingOptionsStatus = document.getElementById('maskingOptionsStatus');
+          const subsetOptionsStatus = document.getElementById('subsetOptionsStatus');
+          if (maskingOptionsStatus) maskingOptionsStatus.innerHTML = '';
+          if (subsetOptionsStatus) subsetOptionsStatus.innerHTML = '';
+          
+          // Hide the "already uploaded" message
+          const alreadyUploadedMsg = document.getElementById('alreadyUploadedMsg');
+          if (alreadyUploadedMsg) alreadyUploadedMsg.style.display = 'none';
+          
+          // Re-render empty states
+          renderTables();
+          renderMaskingMap();
+          
+          // Switch to Welcome tab
+          setActiveTab('welcome');
+          
+          // Show confirmation
+          alert('All uploaded files have been cleared. You can now upload a fresh batch of files.');
         });
       }
     });
