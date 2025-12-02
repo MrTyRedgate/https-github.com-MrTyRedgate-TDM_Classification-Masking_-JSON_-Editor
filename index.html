@@ -2071,17 +2071,20 @@
           // Handle built-in rules
           if (jsonData.classifications.builtIn) {
             const builtIn = jsonData.classifications.builtIn;
+            
+            // If enabled array exists, start by enabling only those
+            if (builtIn.enabled && Array.isArray(builtIn.enabled)) {
+              allBuiltInClassificationTypes.forEach(type => {
+                optionsState.builtInRules[type] = builtIn.enabled.includes(type);
+              });
+            }
+            
+            // If disabled array exists, disable those (can work alongside enabled)
             if (builtIn.disabled && Array.isArray(builtIn.disabled)) {
               builtIn.disabled.forEach(type => {
                 if (optionsState.builtInRules.hasOwnProperty(type)) {
                   optionsState.builtInRules[type] = false;
                 }
-              });
-            }
-            // If only enabled is specified, disable all others
-            if (builtIn.enabled && Array.isArray(builtIn.enabled) && !builtIn.disabled) {
-              allBuiltInClassificationTypes.forEach(type => {
-                optionsState.builtInRules[type] = builtIn.enabled.includes(type);
               });
             }
           }
@@ -2156,13 +2159,13 @@
         }
 
         // Re-render all options UI
-        renderBuiltInRules();
-        renderCustomRules();
-        renderCustomDatasets();
-        renderExcludeTables();
-        renderExcludeColumns();
-        renderOverrideColumns();
-        updateOptionsPreview();
+        if (typeof renderBuiltInRules === 'function') renderBuiltInRules();
+        if (typeof renderCustomRules === 'function') renderCustomRules();
+        if (typeof renderCustomDatasets === 'function') renderCustomDatasets();
+        if (typeof renderExcludeTables === 'function') renderExcludeTables();
+        if (typeof renderExcludeColumns === 'function') renderExcludeColumns();
+        if (typeof renderOverrideColumns === 'function') renderOverrideColumns();
+        if (typeof updateOptionsPreview === 'function') updateOptionsPreview();
 
         return { success: true };
       } catch (err) {
@@ -2267,6 +2270,10 @@
               
               if (result.success) {
                 statusEl.innerHTML = '<span style="color:#090;">✓ Loaded successfully! Check the Masking Options tab.</span>';
+                // Force a re-render by switching to options tab briefly
+                const datasetsLoaded = optionsState.customDatasets.length;
+                const rulesLoaded = optionsState.customRules.length;
+                statusEl.innerHTML += `<br><small style="color:#666;">Loaded ${datasetsLoaded} datasets, ${rulesLoaded} custom rules</small>`;
               } else {
                 statusEl.innerHTML = `<span style="color:#c00;">✗ Error: ${result.error}</span>`;
               }
@@ -2791,7 +2798,10 @@
 
     function renderCustomDatasets() {
       const container = document.getElementById('customDatasetsContainer');
-      if (!container) return;
+      if (!container) {
+        console.warn('customDatasetsContainer not found');
+        return;
+      }
       if (optionsState.customDatasets.length === 0) {
         container.innerHTML = '<p style="color:#888; font-style:italic;">No custom datasets defined. Click "Add Custom Dataset" to create one.</p>';
         return;
