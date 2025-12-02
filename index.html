@@ -597,6 +597,57 @@
       .header-title { font-size: 1.3em; }
     }
     
+    /* Mode Toggle Switch Styles */
+    .mode-toggle-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .mode-toggle-label {
+      font-size: 0.7em;
+      color: rgba(255,255,255,0.8);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .mode-toggle {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 3px;
+      gap: 0;
+    }
+    .mode-toggle-option {
+      padding: 4px 12px;
+      font-size: 0.75em;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      border-radius: 16px;
+      transition: all 0.2s;
+    }
+    .mode-toggle-option.active {
+      background: #fff;
+      color: #0097a7;
+    }
+    .mode-toggle-option:hover:not(.active) {
+      color: #fff;
+    }
+    
+    /* Hide edit buttons in Viewer mode */
+    body.viewer-mode .edit-type-btn,
+    body.viewer-mode .edit-dataset-btn,
+    body.viewer-mode .edit-deterministic-btn,
+    body.viewer-mode .override-btn,
+    body.viewer-mode .add-column-btn,
+    body.viewer-mode .add-table-btn { display: none !important; }
+    body.viewer-mode .editable-cell { cursor: default; }
+    body.viewer-mode .editable-cell:hover { background: transparent; }
+    body.viewer-mode #changesBar { display: none !important; }
+
     /* Expression Builder Wizard Styles */
     .expr-wizard-modal {
       display: none;
@@ -928,19 +979,28 @@
   <div class="header">
     <!-- Logo removed as requested -->
     <span class="header-title" style="margin:0 auto;">TDM Classification and Masking JSON Editor</span>
-    <div style="position:absolute;right:18px;top:18px;display:flex;align-items:center;gap:16px;z-index:1001;">
-      <button id="exportAllBtn" title="Export All Files as ZIP" style="background:#fff;border:2px solid #fff;border-radius:6px;padding:6px 14px;cursor:pointer;font-weight:600;color:#0097a7;font-size:0.9em;display:flex;align-items:center;gap:6px;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0097a7" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-        Export All
-      </button>
-      <span style="font-size:1.1em;color:#fff;opacity:0.8;font-weight:600;letter-spacing:1px;">V1.0</span>
-      <button id="howToUseBtn" title="How to Use Guide" style="background:none;border:none;cursor:pointer;padding:0;margin:0;">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="12" fill="#fff" opacity="0.85"/>
-          <circle cx="12" cy="12" r="10" fill="#0097a7" opacity="0.9"/>
-          <text x="12" y="16" text-anchor="middle" fill="#fff" font-size="15" font-family="Segoe UI, Arial, sans-serif" font-weight="bold">?</text>
-        </svg>
-      </button>
+    <div style="position:absolute;right:18px;top:12px;display:flex;flex-direction:column;align-items:flex-end;gap:8px;z-index:1001;">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <button id="exportAllBtn" title="Export All Files as ZIP" style="background:#fff;border:2px solid #fff;border-radius:6px;padding:6px 14px;cursor:pointer;font-weight:600;color:#0097a7;font-size:0.9em;display:flex;align-items:center;gap:6px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0097a7" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Export All
+        </button>
+        <span style="font-size:1.1em;color:#fff;opacity:0.8;font-weight:600;letter-spacing:1px;">V1.0</span>
+        <button id="howToUseBtn" title="How to Use Guide" style="background:none;border:none;cursor:pointer;padding:0;margin:0;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="12" fill="#fff" opacity="0.85"/>
+            <circle cx="12" cy="12" r="10" fill="#0097a7" opacity="0.9"/>
+            <text x="12" y="16" text-anchor="middle" fill="#fff" font-size="15" font-family="Segoe UI, Arial, sans-serif" font-weight="bold">?</text>
+          </svg>
+        </button>
+      </div>
+      <div class="mode-toggle-container">
+        <span class="mode-toggle-label">Mode</span>
+        <div class="mode-toggle">
+          <button id="modeViewer" class="mode-toggle-option active" onclick="setAppMode('viewer')">Viewer</button>
+          <button id="modeEditor" class="mode-toggle-option" onclick="setAppMode('editor')">Editor</button>
+        </div>
+      </div>
     </div>
     <footer style="position:fixed;right:18px;bottom:38px;font-size:1.2em;color:#0097a7;opacity:0.5;font-weight:700;letter-spacing:1px;pointer-events:none;z-index:999;background:transparent;">Beta Dev Usage</footer>
   </div>
@@ -1633,6 +1693,43 @@
             };
           }
         });
+
+    // App mode (viewer/editor) management
+    let currentAppMode = 'viewer';
+
+    function setAppMode(mode) {
+      currentAppMode = mode;
+      sessionStorage.setItem('editorMode', mode);
+      
+      // Update toggle buttons
+      const viewerBtn = document.getElementById('modeViewer');
+      const editorBtn = document.getElementById('modeEditor');
+      if (viewerBtn && editorBtn) {
+        viewerBtn.classList.toggle('active', mode === 'viewer');
+        editorBtn.classList.toggle('active', mode === 'editor');
+      }
+      
+      // Toggle body class for CSS-based hiding of edit controls
+      if (mode === 'viewer') {
+        document.body.classList.add('viewer-mode');
+      } else {
+        document.body.classList.remove('viewer-mode');
+        // Show changes bar if there are pending changes
+        if (typeof getTotalPendingChanges === 'function' && getTotalPendingChanges() > 0) {
+          const changesBar = document.getElementById('changesBar');
+          if (changesBar) changesBar.classList.add('visible');
+        }
+      }
+    }
+
+    function initAppMode() {
+      const savedMode = sessionStorage.getItem('editorMode') || 'viewer';
+      setAppMode(savedMode);
+    }
+
+    // Initialize mode on page load
+    document.addEventListener('DOMContentLoaded', initAppMode);
+
     let data = null;
     let originalData = null; // Store original for comparison
     let tables = [];
@@ -1693,6 +1790,11 @@
       const total = getTotalPendingChanges();
       const bar = document.getElementById('changesBar');
       const count = document.getElementById('changesCount');
+      // Don't show changes bar in viewer mode
+      if (currentAppMode === 'viewer') {
+        bar.classList.remove('visible');
+        return;
+      }
       if (total > 0) {
         bar.classList.add('visible');
         count.textContent = total;

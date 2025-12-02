@@ -49,6 +49,10 @@ A browser-based tool for viewing, editing, and managing TDM (Test Data Managemen
 - **Validation**: Warnings for mutually exclusive options (desiredSize vs startingTables)
 
 ### Additional Features
+- **Viewer/Editor Mode Toggle**: Switch between view-only mode (default) and edit mode in the header
+  - **Viewer Mode**: Browse and explore data without risk of accidental edits
+  - **Editor Mode**: Full editing capabilities with change tracking
+  - Mode preference persists in session storage
 - **Welcome Tab**: Getting started guide for new users
 - **Session Persistence**: All uploaded files (classification, masking, masking-options, subset-options) are remembered in browser session storage until you close the browser or click "Forget All Files"
 - **Export All (ZIP)**: Download all JSON files as a single ZIP archive
