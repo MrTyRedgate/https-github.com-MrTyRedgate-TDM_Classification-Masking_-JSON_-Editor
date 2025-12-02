@@ -1613,19 +1613,22 @@
             <h4><span class="icon">📦</span> Dataset Reference</h4>
             <p style="color:#666; font-size:0.8em; margin:0 0 10px 0;">Reference a built-in or custom dataset.</p>
             <div class="expr-input-row">
-              <input type="text" id="exprDatasetName" placeholder="e.g., GivenNames, Domains">
+              <select id="exprDatasetSelect" style="flex:2;">
+                <option value="">-- Select a dataset --</option>
+              </select>
             </div>
             <div class="expr-input-row">
-              <input type="text" id="exprDatasetColumn" placeholder="Column for determinism (optional)">
+              <select id="exprDatasetColumnSelect" style="flex:2;">
+                <option value="">-- Column for determinism (optional) --</option>
+              </select>
               <button class="expr-btn-add" onclick="addExprDataset()">Add</button>
             </div>
-            <div class="expr-quick-datasets" style="margin-top:8px;">
-              <button class="expr-quick-btn" onclick="setExprDataset('GivenNames')">GivenNames</button>
-              <button class="expr-quick-btn" onclick="setExprDataset('FamilyNames')">FamilyNames</button>
-              <button class="expr-quick-btn" onclick="setExprDataset('Domains')">Domains</button>
-              <button class="expr-quick-btn" onclick="setExprDataset('TopLevelDomains')">TopLevelDomains</button>
-              <button class="expr-quick-btn" onclick="setExprDataset('Cities')">Cities</button>
-              <button class="expr-quick-btn" onclick="setExprDataset('StreetNames')">StreetNames</button>
+            <div class="expr-input-row" style="margin-top:4px;">
+              <input type="text" id="exprDatasetName" placeholder="Or type custom dataset name">
+              <input type="text" id="exprDatasetColumn" placeholder="Custom column (optional)">
+            </div>
+            <div class="expr-quick-datasets" style="margin-top:8px;" id="exprQuickDatasets">
+              <!-- Quick dataset buttons populated dynamically -->
             </div>
           </div>
           
@@ -3900,6 +3903,9 @@
       // Populate column names from classification.json
       populateWizardColumnNames();
       
+      // Populate dataset dropdown
+      populateWizardDatasets();
+      
       const modal = document.getElementById('exprWizardModal');
       if (modal) {
         modal.classList.add('visible');
@@ -3910,6 +3916,7 @@
     
     function populateWizardColumnNames() {
       const select = document.getElementById('exprColumnSelect');
+      const determinismSelect = document.getElementById('exprDatasetColumnSelect');
       const quickContainer = document.getElementById('exprQuickColumns');
       
       // Gather all unique column names from classification data
@@ -3927,7 +3934,7 @@
       // Sort column names alphabetically
       const sortedColumns = Array.from(columnNames).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
       
-      // Populate select dropdown
+      // Populate column reference select dropdown
       if (select) {
         select.innerHTML = '<option value="">-- Select a column --</option>';
         sortedColumns.forEach(colName => {
@@ -3935,6 +3942,17 @@
           option.value = colName;
           option.textContent = colName;
           select.appendChild(option);
+        });
+      }
+      
+      // Populate determinism column select dropdown
+      if (determinismSelect) {
+        determinismSelect.innerHTML = '<option value="">-- Column for determinism (optional) --</option>';
+        sortedColumns.forEach(colName => {
+          const option = document.createElement('option');
+          option.value = colName;
+          option.textContent = colName;
+          determinismSelect.appendChild(option);
         });
       }
       
@@ -3953,6 +3971,78 @@
             quickContainer.innerHTML += `<span style="color:#888; font-size:0.75em; margin-left:8px;">+${sortedColumns.length - 12} more in dropdown</span>`;
           }
         }
+      }
+    }
+    
+    function populateWizardDatasets() {
+      const datasetSelect = document.getElementById('exprDatasetSelect');
+      const quickContainer = document.getElementById('exprQuickDatasets');
+      
+      // Get all available datasets with labels (built-in and custom)
+      const datasetsWithLabels = getMaskingDatasetsWithLabels();
+      
+      // Populate dataset select dropdown
+      if (datasetSelect) {
+        datasetSelect.innerHTML = '<option value="">-- Select a dataset --</option>';
+        
+        // Add built-in datasets first
+        const builtIn = datasetsWithLabels.filter(d => !d.isCustom);
+        const custom = datasetsWithLabels.filter(d => d.isCustom);
+        
+        if (builtIn.length > 0) {
+          const builtInGroup = document.createElement('optgroup');
+          builtInGroup.label = 'Built-in Datasets';
+          builtIn.forEach(ds => {
+            const option = document.createElement('option');
+            option.value = ds.name;
+            option.textContent = ds.name;
+            builtInGroup.appendChild(option);
+          });
+          datasetSelect.appendChild(builtInGroup);
+        }
+        
+        if (custom.length > 0) {
+          const customGroup = document.createElement('optgroup');
+          customGroup.label = 'Custom Datasets';
+          custom.forEach(ds => {
+            const option = document.createElement('option');
+            option.value = ds.name;
+            option.textContent = ds.name;
+            customGroup.appendChild(option);
+          });
+          datasetSelect.appendChild(customGroup);
+        }
+      }
+      
+      // Populate quick dataset buttons
+      if (quickContainer) {
+        const allDatasets = datasetsWithLabels;
+        if (allDatasets.length === 0) {
+          quickContainer.innerHTML = '<span style="color:#888; font-size:0.8em;">No datasets available</span>';
+        } else {
+          // Show first 8 built-in datasets as quick buttons
+          const builtInQuick = datasetsWithLabels.filter(d => !d.isCustom).slice(0, 8);
+          let html = builtInQuick.map(ds => 
+            `<button class="expr-quick-btn" onclick="setExprDatasetFromDropdown('${escapeHtml(ds.name)}')">${escapeHtml(ds.name)}</button>`
+          ).join('');
+          
+          // Add custom datasets with different styling
+          const customDatasets = datasetsWithLabels.filter(d => d.isCustom);
+          if (customDatasets.length > 0) {
+            html += customDatasets.map(ds => 
+              `<button class="expr-quick-btn column" onclick="setExprDatasetFromDropdown('${escapeHtml(ds.name)}')" title="Custom dataset">${escapeHtml(ds.name)}</button>`
+            ).join('');
+          }
+          
+          quickContainer.innerHTML = html;
+        }
+      }
+    }
+    
+    function setExprDatasetFromDropdown(name) {
+      const select = document.getElementById('exprDatasetSelect');
+      if (select) {
+        select.value = name;
       }
     }
     
@@ -4172,22 +4262,32 @@
     }
     
     function addExprDataset() {
+      const datasetSelect = document.getElementById('exprDatasetSelect');
+      const columnSelect = document.getElementById('exprDatasetColumnSelect');
       const nameInput = document.getElementById('exprDatasetName');
       const columnInput = document.getElementById('exprDatasetColumn');
       
-      if (!nameInput || !nameInput.value) {
-        alert('Please enter a dataset name');
+      // Prefer dropdown values, fallback to text inputs
+      const datasetName = datasetSelect?.value || nameInput?.value || '';
+      const columnName = columnSelect?.value || columnInput?.value || '';
+      
+      if (!datasetName) {
+        alert('Please select or enter a dataset name');
         return;
       }
       
       exprWizardComponents.push({
         type: 'dataset',
-        name: nameInput.value,
-        column: columnInput?.value || ''
+        name: datasetName,
+        column: columnName
       });
       
-      nameInput.value = '';
+      // Clear all inputs
+      if (datasetSelect) datasetSelect.value = '';
+      if (columnSelect) columnSelect.value = '';
+      if (nameInput) nameInput.value = '';
       if (columnInput) columnInput.value = '';
+      
       updateExpressionPreview();
       renderExpressionComponents();
     }
