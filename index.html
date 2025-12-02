@@ -616,10 +616,10 @@
     .expr-wizard-content {
       background: #fff;
       border-radius: 12px;
-      max-width: 900px;
+      max-width: 950px;
       width: 95%;
-      max-height: 90vh;
-      overflow: hidden;
+      max-height: none;
+      overflow: visible;
       display: flex;
       flex-direction: column;
       box-shadow: 0 8px 32px rgba(0,0,0,0.3);
@@ -653,8 +653,7 @@
     }
     .expr-wizard-body {
       padding: 24px;
-      overflow-y: auto;
-      flex: 1;
+      overflow-y: visible;
     }
     .expr-preview-area {
       background: #1e1e1e;
@@ -1842,6 +1841,28 @@
             } catch (e) {}
           }
           
+          // Update masking options status
+          const savedMaskingOptions = sessionStorage.getItem('maskingOptionsJson');
+          const maskingOptionsStatus = document.getElementById('maskingOptionsStatus');
+          if (maskingOptionsStatus && savedMaskingOptions) {
+            try {
+              const optData = JSON.parse(savedMaskingOptions);
+              const datasetsCount = optData.datasets ? optData.datasets.length : 0;
+              maskingOptionsStatus.innerHTML = `<span style="color:#090;">✓ Already loaded</span><br><small style="color:#666;">${datasetsCount} datasets. Check the Masking Options tab.</small>`;
+            } catch (e) {}
+          }
+          
+          // Update subset options status
+          const savedSubsetOptions = sessionStorage.getItem('subsetOptionsJson');
+          const subsetOptionsStatus = document.getElementById('subsetOptionsStatus');
+          if (subsetOptionsStatus && savedSubsetOptions) {
+            try {
+              const subData = JSON.parse(savedSubsetOptions);
+              const startingCount = subData.startingTables ? subData.startingTables.length : 0;
+              subsetOptionsStatus.innerHTML = `<span style="color:#090;">✓ Already loaded</span><br><small style="color:#666;">${startingCount} starting tables. Check the Subset Options tab.</small>`;
+            } catch (e) {}
+          }
+          
           // Hide the old alreadyUploadedMsg since we now use inline status
           const alreadyUploadedMsg = document.getElementById('alreadyUploadedMsg');
           if (alreadyUploadedMsg) alreadyUploadedMsg.style.display = 'none';
@@ -1877,6 +1898,29 @@
           sessionStorage.removeItem('maskingJson');
         }
       }
+      
+      // Restore masking options from session storage
+      const savedMaskingOptions = sessionStorage.getItem('maskingOptionsJson');
+      if (savedMaskingOptions) {
+        try {
+          const maskingOptionsData = JSON.parse(savedMaskingOptions);
+          loadMaskingOptionsFile(maskingOptionsData);
+        } catch (err) {
+          sessionStorage.removeItem('maskingOptionsJson');
+        }
+      }
+      
+      // Restore subset options from session storage
+      const savedSubsetOptions = sessionStorage.getItem('subsetOptionsJson');
+      if (savedSubsetOptions) {
+        try {
+          const subsetOptionsData = JSON.parse(savedSubsetOptions);
+          loadSubsetOptionsFile(subsetOptionsData);
+        } catch (err) {
+          sessionStorage.removeItem('subsetOptionsJson');
+        }
+      }
+      
       // Set default tab: Welcome if no files ever uploaded (first visit), Classification if files exist
       if (!hasClassification && !hasMasking) {
         setActiveTab('welcome');
@@ -2959,6 +3003,9 @@
               const result = loadMaskingOptionsFile(jsonData);
               
               if (result.success) {
+                // Save to session storage for persistence
+                sessionStorage.setItem('maskingOptionsJson', event.target.result);
+                
                 statusEl.innerHTML = '<span style="color:#090;">✓ Loaded successfully! Check the Masking Options tab.</span>';
                 // Force a re-render by switching to options tab briefly
                 const datasetsLoaded = optionsState.customDatasets.length;
@@ -2992,6 +3039,9 @@
               const result = loadSubsetOptionsFile(jsonData);
               
               if (result.success) {
+                // Save to session storage for persistence
+                sessionStorage.setItem('subsetOptionsJson', event.target.result);
+                
                 statusEl.innerHTML = '<span style="color:#090;">✓ Loaded successfully! Check the Subset Options tab.</span>';
               } else {
                 statusEl.innerHTML = `<span style="color:#c00;">✗ Error: ${result.error}</span>`;
@@ -3009,13 +3059,15 @@
       const forgetAllFilesBtn = document.getElementById('forgetAllFilesBtn');
       if (forgetAllFilesBtn) {
         forgetAllFilesBtn.addEventListener('click', function() {
-          if (!confirm('Are you sure you want to forget all uploaded files?\n\nThis will clear:\n• classification.json\n• masking.json\n• All pending changes\n\nThis cannot be undone.')) {
+          if (!confirm('Are you sure you want to forget all uploaded files?\\n\\nThis will clear:\\n• classification.json\\n• masking.json\\n• masking-options.json\\n• subset-options.json\\n• All pending changes\\n\\nThis cannot be undone.')) {
             return;
           }
           
           // Clear session storage
           sessionStorage.removeItem('classificationJson');
           sessionStorage.removeItem('maskingJson');
+          sessionStorage.removeItem('maskingOptionsJson');
+          sessionStorage.removeItem('subsetOptionsJson');
           
           // Reset application state
           data = null;
@@ -3027,6 +3079,30 @@
           maskingData = null;
           originalMaskingData = null;
           maskingTables = [];
+          
+          // Reset options state
+          optionsState = {
+            builtInRules: {},
+            customRules: [],
+            customDatasets: [],
+            excludeTables: [],
+            excludeColumns: [],
+            overrideColumns: []
+          };
+          
+          // Reset subset options state
+          subsetStartingTables = [];
+          subsetExcludedTables = [];
+          subsetStaticDataTables = [];
+          subsetManualRelationships = [];
+          
+          // Clear subset options form fields
+          const subsetDesiredSize = document.getElementById('subsetDesiredSize');
+          const subsetRowThreshold = document.getElementById('subsetRowThreshold');
+          const subsetUseTempTables = document.getElementById('subsetUseTempTables');
+          if (subsetDesiredSize) subsetDesiredSize.value = '';
+          if (subsetRowThreshold) subsetRowThreshold.value = '300';
+          if (subsetUseTempTables) subsetUseTempTables.checked = false;
           
           // Clear pending changes
           pendingChanges = {
