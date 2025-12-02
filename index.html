@@ -603,7 +603,7 @@
 <body>
   <div class="header">
     <!-- Logo removed as requested -->
-    <span class="header-title" style="margin:0 auto;">TDM Classification and Masking JSON Viewer</span>
+    <span class="header-title" style="margin:0 auto;">TDM Classification and Masking JSON Editor</span>
     <div style="position:absolute;right:18px;top:18px;display:flex;align-items:center;gap:16px;z-index:1001;">
       <button id="exportAllBtn" title="Export All Files as ZIP" style="background:#fff;border:2px solid #fff;border-radius:6px;padding:6px 14px;cursor:pointer;font-weight:600;color:#c00;font-size:0.9em;display:flex;align-items:center;gap:6px;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c00" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
@@ -778,14 +778,14 @@
         <p style="color:#666; margin:0;">Configure advanced options files for TDM CLI commands.</p>
       </div>
       
-      <!-- Sub-tabs for Masking Options and Subset Options -->
+      <!-- Sub-tabs for Subset Options and Masking Options -->
       <div class="tab-subsection" style="margin-bottom:24px;">
-        <button id="advancedTabMasking" class="active" style="padding:10px 24px;">Masking Options</button>
-        <button id="advancedTabSubset" style="padding:10px 24px;">Subset Options</button>
+        <button id="advancedTabSubset" class="active" style="padding:10px 24px;">Subset Options</button>
+        <button id="advancedTabMasking" style="padding:10px 24px;">Masking Options</button>
       </div>
 
-      <!-- Masking Options Sub-Tab Content -->
-      <div id="advancedContentMasking">
+      <!-- Subset Options Sub-Tab Content -->
+      <div id="advancedContentSubset">
         <div style="text-align:center; margin-bottom:24px;">
           <h3 style="color:#c00; margin:0 0 8px 0;">TDM Masking Options File Builder</h3>
           <p style="color:#666; margin:0;">Configure advanced options for the TDM <code>classify</code> and <code>map</code> commands. This generates a <code>masking-options.json</code> file.</p>
@@ -921,10 +921,10 @@
           </p>
         </div>
       </div>
-      </div><!-- End advancedContentMasking -->
+      </div><!-- End advancedContentSubset -->
 
-      <!-- Subset Options Sub-Tab Content -->
-      <div id="advancedContentSubset" style="display:none;">
+      <!-- Masking Options Sub-Tab Content -->
+      <div id="advancedContentMasking" style="display:none;">
         <div style="text-align:center; margin-bottom:24px;">
           <h3 style="color:#c00; margin:0 0 8px 0;">TDM Subset Options File Builder</h3>
           <p style="color:#666; margin:0;">Configure options for the TDM <code>rgsubset</code> command. This generates a <code>subset-options.json</code> file.</p>
@@ -1052,8 +1052,8 @@
             </code>
           </p>
         </div>
-      </div><!-- End subsetContentPreview -->
-      </div><!-- End advancedContentSubset -->
+      </div><!-- End subContentPreview -->
+      </div><!-- End advancedContentMasking -->
     </div><!-- End tabContentAdvanced -->
     
     <div id="tabContentSettings" style="display:none;">
@@ -2929,9 +2929,9 @@
         advSubsetTab.onclick = function() { setActiveAdvancedTab('subset'); };
       }
       
-      // Default to masking tab if no selection
-      if (advMaskingContent && advMaskingContent.style.display !== '') {
-        setActiveAdvancedTab('masking');
+      // Default to subset tab if no selection
+      if (advSubsetContent && advSubsetContent.style.display !== '') {
+        setActiveAdvancedTab('subset');
       }
     }
     
