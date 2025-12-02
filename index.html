@@ -96,6 +96,478 @@
       font-weight: 600;
       color: #c00;
     }
+    .edit-type-btn, .edit-dataset-btn, .edit-deterministic-btn {
+      display: none;
+      padding: 2px 8px;
+      font-size: 0.85em;
+      background: #c00;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-left: 8px;
+    }
+    .edit-type-btn:hover, .edit-dataset-btn:hover, .edit-deterministic-btn:hover {
+      background: #a00;
+    }
+    tr:hover .edit-type-btn, tr:hover .edit-dataset-btn, tr:hover .edit-deterministic-btn {
+      display: inline-block;
+    }
+    .editable-cell {
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 3px;
+      transition: background 0.2s;
+    }
+    .editable-cell:hover {
+      background: #ffe5e5;
+    }
+    .potential-key-cell {
+      padding: 4px;
+      color: #666;
+      background: #f9f9f9;
+      font-style: italic;
+      position: relative;
+    }
+    .override-btn {
+      display: none;
+      padding: 2px 6px;
+      font-size: 0.8em;
+      background: #f90;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-left: 8px;
+    }
+    .override-btn:hover {
+      background: #e80;
+    }
+    tr:hover .override-btn {
+      display: inline-block;
+    }
+    .type-dropdown, .dataset-dropdown {
+      padding: 4px 8px;
+      border: 1px solid #c00;
+      border-radius: 3px;
+      background: #fff;
+      color: #900;
+      font-size: 0.95em;
+    }
+    /* Options tab styling */
+    .options-section {
+      background: #fff5f5;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      border-left: 4px solid #c00;
+    }
+    .options-section h3 {
+      color: #c00;
+      margin: 0 0 16px 0;
+      font-size: 1.1em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .options-section h3 .info-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      background: #c00;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 0.75em;
+      cursor: help;
+    }
+    .rule-toggle {
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      margin: 4px 0;
+      background: #fff;
+      border-radius: 4px;
+      border: 1px solid #eee;
+    }
+    .rule-toggle label {
+      flex: 1;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .rule-toggle input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #c00;
+    }
+    .custom-rule {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .custom-rule .rule-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .custom-rule input, .custom-rule select {
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 0.95em;
+    }
+    .custom-rule input:focus, .custom-rule select:focus {
+      outline: 2px solid #c00;
+      border-color: #c00;
+    }
+    .custom-rule .condition-input {
+      width: 100%;
+      margin-top: 8px;
+      font-family: monospace;
+    }
+    .btn-add-rule {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      background: #c00;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+    .btn-add-rule:hover {
+      background: #a00;
+    }
+    .btn-remove-rule {
+      padding: 6px 12px;
+      background: #f5f5f5;
+      color: #666;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85em;
+    }
+    .btn-remove-rule:hover {
+      background: #fee;
+      color: #c00;
+      border-color: #c00;
+    }
+    .override-item {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 14px;
+      margin-bottom: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr auto;
+      gap: 12px;
+      align-items: end;
+    }
+    .override-item.column-override {
+      grid-template-columns: 1fr 1fr 1fr 1fr auto;
+    }
+    .override-item .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .override-item label {
+      font-size: 0.85em;
+      color: #666;
+      font-weight: 500;
+    }
+    .override-item input, .override-item select {
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .options-preview {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 16px;
+      border-radius: 6px;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 0.9em;
+      overflow-x: auto;
+      white-space: pre;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .options-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      justify-content: flex-end;
+    }
+    .options-actions button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95em;
+    }
+    .btn-download-options {
+      background: #090;
+      color: #fff;
+    }
+    .btn-download-options:hover {
+      background: #070;
+    }
+    .btn-copy-options {
+      background: #666;
+      color: #fff;
+    }
+    .btn-copy-options:hover {
+      background: #555;
+    }
+    .tab-subsection {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ddd;
+    }
+    .tab-subsection button {
+      padding: 10px 18px;
+      background: #f5f5f5;
+      color: #666;
+      border: none;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 4px 4px 0 0;
+    }
+    .tab-subsection button.active {
+      background: #c00;
+      color: #fff;
+    }
+    .condition-help {
+      font-size: 0.85em;
+      color: #666;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+    .condition-help code {
+      background: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+    /* Pending changes styling */
+    .cell-modified {
+      background: #fffbe6 !important;
+      border-left: 3px solid #f90;
+    }
+    .cell-modified .classification {
+      color: #c60;
+    }
+    .modified-badge {
+      display: inline-block;
+      background: #f90;
+      color: #fff;
+      font-size: 0.7em;
+      padding: 1px 5px;
+      border-radius: 8px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .changes-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, #333 0%, #444 100%);
+      color: #fff;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1500;
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.25);
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+    .changes-bar.visible {
+      transform: translateY(0);
+    }
+    .changes-bar .changes-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .changes-bar .changes-count {
+      background: #f90;
+      color: #fff;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 0.95em;
+    }
+    .changes-bar .changes-text {
+      font-size: 0.95em;
+      opacity: 0.9;
+    }
+    .changes-bar .changes-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .changes-bar button {
+      padding: 8px 18px;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95em;
+      transition: all 0.2s;
+    }
+    .changes-bar .btn-review {
+      background: #c00;
+      color: #fff;
+    }
+    .changes-bar .btn-review:hover {
+      background: #a00;
+    }
+    .changes-bar .btn-discard {
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    .changes-bar .btn-discard:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    .review-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+    .review-modal.visible {
+      display: flex;
+    }
+    .review-modal-content {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 700px;
+      width: 90%;
+      max-height: 80vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .review-header {
+      background: #c00;
+      color: #fff;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .review-header h2 {
+      margin: 0;
+      font-size: 1.25em;
+    }
+    .review-header .close-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5em;
+      cursor: pointer;
+      opacity: 0.8;
+    }
+    .review-header .close-btn:hover {
+      opacity: 1;
+    }
+    .review-body {
+      padding: 20px 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .review-section {
+      margin-bottom: 20px;
+    }
+    .review-section h3 {
+      color: #c00;
+      font-size: 1.05em;
+      margin: 0 0 12px 0;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #eee;
+    }
+    .review-item {
+      background: #f9f9f9;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      font-size: 0.92em;
+    }
+    .review-item .table-name {
+      font-weight: 600;
+      color: #333;
+    }
+    .review-item .col-name {
+      color: #666;
+    }
+    .review-item .change-arrow {
+      color: #999;
+      margin: 0 8px;
+    }
+    .review-item .old-value {
+      color: #999;
+      text-decoration: line-through;
+    }
+    .review-item .new-value {
+      color: #090;
+      font-weight: 600;
+    }
+    .review-footer {
+      padding: 16px 24px;
+      background: #f5f5f5;
+      border-top: 1px solid #eee;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .review-footer button {
+      padding: 10px 24px;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95em;
+    }
+    .review-footer .btn-cancel {
+      background: #eee;
+      color: #666;
+    }
+    .review-footer .btn-cancel:hover {
+      background: #ddd;
+    }
+    .review-footer .btn-save {
+      background: #090;
+      color: #fff;
+    }
+    .review-footer .btn-save:hover {
+      background: #070;
+    }
+    .no-changes {
+      text-align: center;
+      color: #888;
+      padding: 30px;
+      font-style: italic;
+    }
     .pagination {
       text-align: center;
       margin-top: 16px;
@@ -125,12 +597,18 @@
       .header-title { font-size: 1.3em; }
     }
   </style>
+  <!-- JSZip library for ZIP export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
   <div class="header">
     <!-- Logo removed as requested -->
     <span class="header-title" style="margin:0 auto;">TDM Classification and Masking JSON Viewer</span>
     <div style="position:absolute;right:18px;top:18px;display:flex;align-items:center;gap:16px;z-index:1001;">
+      <button id="exportAllBtn" title="Export All Files as ZIP" style="background:#fff;border:2px solid #fff;border-radius:6px;padding:6px 14px;cursor:pointer;font-weight:600;color:#c00;font-size:0.9em;display:flex;align-items:center;gap:6px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c00" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Export All
+      </button>
       <span style="font-size:1.1em;color:#fff;opacity:0.8;font-weight:600;letter-spacing:1px;">V1.0</span>
       <button id="howToUseBtn" title="How to Use Guide" style="background:none;border:none;cursor:pointer;padding:0;margin:0;">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -146,6 +624,8 @@
     <div class="tab-bar" style="display:flex; gap:2px; margin-bottom:24px; border-bottom:2px solid #c00;">
       <button id="tabClassification" class="tab-btn active" style="flex:1; padding:12px; background:#c00; color:#fff; border:none; font-weight:600; cursor:pointer;">Classification</button>
       <button id="tabMasking" class="tab-btn" style="flex:1; padding:12px; background:#fff; color:#c00; border:none; font-weight:600; cursor:pointer;">Masking Map</button>
+      <button id="tabOptions" class="tab-btn" style="flex:1; padding:12px; background:#fff; color:#c00; border:none; font-weight:600; cursor:pointer;">Masking Options</button>
+      <button id="tabSubset" class="tab-btn" style="flex:1; padding:12px; background:#fff; color:#c00; border:none; font-weight:600; cursor:pointer;">Subset Options</button>
       <button id="tabSettings" class="tab-btn" style="flex:1; padding:12px; background:#fff; color:#c00; border:none; font-weight:600; cursor:pointer;">JSON Upload</button>
     </div>
     <div id="tabContentClassification">
@@ -211,6 +691,143 @@
       <div id="maskingNote" style="text-align:center; color:#c00; font-size:0.95em; margin-bottom:12px; margin-top:2px;">Filters from the Table Perspective</div>
       <div id="maskingMapContent"></div>
     </div>
+    <div id="tabContentOptions" style="display:none;">
+      <div style="text-align:center; margin-bottom:24px;">
+        <h2 style="color:#c00; margin:0 0 8px 0;">TDM Options File Builder</h2>
+        <p style="color:#666; margin:0;">Configure advanced options for the TDM <code>classify</code> and <code>map</code> commands. This generates an <code>options.json</code> file.</p>
+      </div>
+      
+      <div class="tab-subsection">
+        <button id="subTabBuiltIn" class="active">Built-in Rules</button>
+        <button id="subTabCustomRules">Custom Rules</button>
+        <button id="subTabDatasets">Custom Datasets</button>
+        <button id="subTabOverrides">Table/Column Overrides</button>
+        <button id="subTabPreview">Preview & Export</button>
+      </div>
+
+      <!-- Built-in Rules Section -->
+      <div id="subContentBuiltIn">
+        <div class="options-section">
+          <h3>Built-in Classification Rules <span class="info-icon" title="Enable or disable the default classification rules that TDM uses to identify PII">?</span></h3>
+          <p style="color:#666; font-size:0.9em; margin-bottom:16px;">Select which built-in classification types should be enabled when running the classify command. Disabled rules will not detect those data types.</p>
+          <div id="builtInRulesContainer">
+            <!-- Rules will be populated by JavaScript -->
+          </div>
+          <div style="margin-top:12px; display:flex; gap:10px;">
+            <button onclick="selectAllBuiltInRules(true)" style="padding:6px 14px; background:#fff; border:1px solid #c00; color:#c00; border-radius:4px; cursor:pointer;">Enable All</button>
+            <button onclick="selectAllBuiltInRules(false)" style="padding:6px 14px; background:#fff; border:1px solid #666; color:#666; border-radius:4px; cursor:pointer;">Disable All</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Custom Rules Section -->
+      <div id="subContentCustomRules" style="display:none;">
+        <div class="options-section">
+          <h3>Custom Classification Rules <span class="info-icon" title="Define your own rules to classify columns based on name patterns">?</span></h3>
+          <p style="color:#666; font-size:0.9em; margin-bottom:16px;">Create custom rules to identify sensitive data based on column name patterns. These rules run in addition to (or instead of) the built-in rules.</p>
+          <div id="customRulesContainer">
+            <!-- Custom rules will be added here -->
+          </div>
+          <button class="btn-add-rule" onclick="addCustomRule()">
+            <span>+</span> Add Custom Rule
+          </button>
+          <div class="condition-help" style="margin-top:16px;">
+            <strong>Condition Syntax:</strong><br>
+            Use <code>Column.Name contains 'text'</code> to match column names containing text.<br>
+            Combine conditions with <code>AND</code> / <code>OR</code>.<br>
+            Example: <code>Column.Name contains 'Company' AND Column.Name contains 'Name'</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- Custom Datasets Section -->
+      <div id="subContentDatasets" style="display:none;">
+        <div class="options-section">
+          <h3>Custom Datasets <span class="info-icon" title="Define custom datasets for masking. These can be used in the map command.">?</span></h3>
+          <p style="color:#666; font-size:0.9em; margin-bottom:16px;">Create custom datasets for masking. These can be List, Expression, Conditional, or File-based datasets.</p>
+          <div id="customDatasetsContainer">
+            <!-- Custom datasets will be added here -->
+          </div>
+          <button class="btn-add-rule" onclick="addCustomDataset()">
+            <span>+</span> Add Custom Dataset
+          </button>
+          <div class="condition-help" style="margin-top:16px;">
+            <strong>Dataset Types:</strong><br>
+            <code>List</code> - A hardcoded list of values (e.g., company names, job titles)<br>
+            <code>Expression</code> - Dynamic expression combining datasets and column values. Example: <code>$(GivenNames($[FirstName])).$(FamilyNames($[LastName]))@$(Domains)</code><br>
+            <code>Conditional</code> - Select dataset based on column values. Uses conditions like <code>$[Country] == "USA"</code><br>
+            <code>File</code> - Load values from an external .txt file (one value per line)
+          </div>
+        </div>
+      </div>
+
+      <!-- Overrides Section -->
+      <div id="subContentOverrides" style="display:none;">
+        <div class="options-section">
+          <h3>Exclude Tables <span class="info-icon" title="Tables listed here will be completely ignored during classification">?</span></h3>
+          <p style="color:#666; font-size:0.9em; margin-bottom:16px;">Add tables that should be excluded from classification entirely.</p>
+          <div id="excludeTablesContainer">
+            <!-- Excluded tables will be added here -->
+          </div>
+          <button class="btn-add-rule" onclick="addExcludeTable()">
+            <span>+</span> Add Table Exclusion
+          </button>
+        </div>
+
+        <div class="options-section">
+          <h3>Exclude Columns <span class="info-icon" title="Specific columns that should be ignored during classification">?</span></h3>
+          <p style="color:#666; font-size:0.9em; margin-bottom:16px;">Add specific columns that should be excluded from classification.</p>
+          <div id="excludeColumnsContainer">
+            <!-- Excluded columns will be added here -->
+          </div>
+          <button class="btn-add-rule" onclick="addExcludeColumn()">
+            <span>+</span> Add Column Exclusion
+          </button>
+        </div>
+
+        <div class="options-section">
+          <h3>Override Column Classification <span class="info-icon" title="Force a specific classification type for a column">?</span></h3>
+          <p style="color:#666; font-size:0.9em; margin-bottom:16px;">Manually set the classification type for specific columns.</p>
+          <div id="overrideColumnsContainer">
+            <!-- Column overrides will be added here -->
+          </div>
+          <button class="btn-add-rule" onclick="addOverrideColumn()">
+            <span>+</span> Add Column Override
+          </button>
+        </div>
+      </div>
+
+      <!-- Preview Section -->
+      <div id="subContentPreview" style="display:none;">
+        <div class="options-section">
+          <h3>Options File Preview</h3>
+          <p style="color:#666; font-size:0.9em; margin-bottom:16px;">Review the generated options file before downloading. This file can be used with the <code>--options-file</code> parameter of the classify command.</p>
+          <pre class="options-preview" id="optionsPreview"></pre>
+          <div class="options-actions">
+            <button class="btn-copy-options" onclick="copyOptionsToClipboard()">Copy to Clipboard</button>
+            <button class="btn-download-options" onclick="downloadOptionsFile()">Download options.json</button>
+          </div>
+        </div>
+        <div class="options-section" style="background:#fffbe6; border-left-color:#f90;">
+          <h3 style="color:#c60;">Usage Instructions</h3>
+          <p style="color:#666; font-size:0.9em; line-height:1.6;">
+            Save the options file and use it with TDM commands:<br><br>
+            <strong>Classification:</strong>
+            <code style="background:#fff; padding:8px 12px; display:block; border-radius:4px; border:1px solid #ddd; margin-bottom:12px;">
+              rganonymize classify --database-engine SqlServer --connection-string "[connection]" --classification-file classification.json --options-file options.json
+            </code>
+            <strong>Mapping (if using custom datasets):</strong>
+            <code style="background:#fff; padding:8px 12px; display:block; border-radius:4px; border:1px solid #ddd; margin-bottom:12px;">
+              rganonymize map --classification-file classification.json --masking-file masking.json --options-file options.json
+            </code>
+            <strong>Masking:</strong>
+            <code style="background:#fff; padding:8px 12px; display:block; border-radius:4px; border:1px solid #ddd;">
+              rganonymize mask --database-engine SqlServer --connection-string "[connection]" --masking-file masking.json --options-file options.json
+            </code>
+          </p>
+        </div>
+      </div>
+    </div>
     <div id="tabContentSettings" style="display:none;">
       <div style="text-align:center; margin-top:40px;">
         <div id="alreadyUploadedMsg" style="display:none;margin-bottom:24px;color:#090;background:#e6ffe6;padding:16px 18px;border-radius:8px;font-size:1.08em;font-weight:500;"></div>
@@ -228,6 +845,136 @@
         </div>
       </div>
     </div>
+    <div id="tabContentSubset" style="display:none;">
+      <div style="text-align:center; margin-bottom:24px;">
+        <h2 style="color:#c00; margin:0 0 8px 0;">Subset Options File Builder</h2>
+        <p style="color:#666; margin:0;">Configure options for the TDM <code>rgsubset</code> command. This generates a <code>subset-options.json</code> file.</p>
+      </div>
+      
+      <div class="tab-subsection">
+        <button id="subsetTabStarting" class="active">Starting Tables</button>
+        <button id="subsetTabExcluded">Excluded Tables</button>
+        <button id="subsetTabStatic">Static Data Tables</button>
+        <button id="subsetTabRelationships">Manual Relationships</button>
+        <button id="subsetTabSettings">Settings</button>
+        <button id="subsetTabPreview">Preview & Export</button>
+      </div>
+
+      <!-- Starting Tables Section -->
+      <div id="subsetContentStarting">
+        <div class="options-section">
+          <h3>Starting Tables <span class="info-icon" title="Tables to start from when creating a subset. Cannot be used with desiredSize.">?</span></h3>
+          <p style="color:#666; font-size:0.9em; margin-bottom:16px;">Define the tables and filter clauses to use as starting points for subsetting. The subsetter will include matching rows and all related data.</p>
+          <div id="startingTablesContainer">
+            <!-- Starting tables will be added here -->
+          </div>
+          <button class="btn-add-rule" onclick="addStartingTable()">
+            <span>+</span> Add Starting Table
+          </button>
+          <div class="condition-help" style="margin-top:16px;">
+            <strong>Filter Clause Examples:</strong><br>
+            <code>WHERE CreatedDate > '2024-01-01'</code><br>
+            <code>WHERE CustomerId IN (1, 2, 3)</code><br>
+            <code>WHERE Status = 'Active'</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- Excluded Tables Section -->
+      <div id="subsetContentExcluded" style="display:none;">
+        <div class="options-section">
+          <h3>Excluded Tables <span class="info-icon" title="Tables to completely ignore when subsetting. Tables with FKs to excluded tables will also be excluded.">?</span></h3>
+          <p style="color:#666; font-size:0.9em; margin-bottom:16px;">Tables listed here will be completely ignored during subsetting. Note: Tables with foreign keys referencing excluded tables will also be excluded.</p>
+          <div id="subsetExcludedTablesContainer">
+            <!-- Excluded tables will be added here -->
+          </div>
+          <button class="btn-add-rule" onclick="addSubsetExcludedTable()">
+            <span>+</span> Add Excluded Table
+          </button>
+        </div>
+      </div>
+
+      <!-- Static Data Tables Section -->
+      <div id="subsetContentStatic" style="display:none;">
+        <div class="options-section">
+          <h3>Static Data Tables <span class="info-icon" title="Tables treated as reference/lookup data. All rows are included, but only outward relationships are followed.">?</span></h3>
+          <p style="color:#666; font-size:0.9em; margin-bottom:16px;">Static data tables (like Countries, Status codes, etc.) will have all rows included. The subsetter follows only outward relationships from these tables.</p>
+          <div id="staticDataTablesContainer">
+            <!-- Static data tables will be added here -->
+          </div>
+          <button class="btn-add-rule" onclick="addStaticDataTable()">
+            <span>+</span> Add Static Data Table
+          </button>
+        </div>
+      </div>
+
+      <!-- Manual Relationships Section -->
+      <div id="subsetContentRelationships" style="display:none;">
+        <div class="options-section">
+          <h3>Manual Relationships <span class="info-icon" title="Define relationships not defined as foreign keys in the database.">?</span></h3>
+          <p style="color:#666; font-size:0.9em; margin-bottom:16px;">Define relationships between tables that aren't defined as foreign keys in the database. These will be treated the same as FK relationships during subsetting.</p>
+          <div id="manualRelationshipsContainer">
+            <!-- Manual relationships will be added here -->
+          </div>
+          <button class="btn-add-rule" onclick="addManualRelationship()">
+            <span>+</span> Add Manual Relationship
+          </button>
+        </div>
+      </div>
+
+      <!-- Settings Section -->
+      <div id="subsetContentSettings" style="display:none;">
+        <div class="options-section">
+          <h3>Subset Settings</h3>
+          <div style="display:grid; gap:20px;">
+            <div class="field-group">
+              <label style="font-weight:600; color:#333;">Desired Size (alternative to Starting Tables)</label>
+              <input type="text" id="subsetDesiredSize" placeholder="e.g., 10%, 5GB, 500MB" style="padding:10px; border:1px solid #ccc; border-radius:4px; width:200px;" onchange="updateSubsetPreview()">
+              <small style="color:#888; display:block; margin-top:4px;">Format: x(%|B|KB|MB|GB|TB). Cannot be used with Starting Tables.</small>
+            </div>
+            <div class="field-group">
+              <label style="font-weight:600; color:#333;">Include Tables Row Threshold</label>
+              <input type="number" id="subsetRowThreshold" placeholder="300" value="300" style="padding:10px; border:1px solid #ccc; border-radius:4px; width:150px;" onchange="updateSubsetPreview()">
+              <small style="color:#888; display:block; margin-top:4px;">Max rows for auto-including tables with no outgoing FKs as static data. Set to 0 to disable.</small>
+            </div>
+            <div class="field-group">
+              <label style="font-weight:600; color:#333;">
+                <input type="checkbox" id="subsetUseTempTables" style="margin-right:8px;" onchange="updateSubsetPreview()">
+                Use Temporary Tables (SQL Server only)
+              </label>
+              <small style="color:#888; display:block; margin-top:4px;">Store working tables in tempDB instead of the source database.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview Section -->
+      <div id="subsetContentPreview" style="display:none;">
+        <div class="options-section">
+          <h3>Subset Options File Preview</h3>
+          <p style="color:#666; font-size:0.9em; margin-bottom:16px;">Review the generated subset options file before downloading.</p>
+          <pre class="options-preview" id="subsetOptionsPreview"></pre>
+          <div class="options-actions">
+            <button class="btn-copy-options" onclick="copySubsetOptionsToClipboard()">Copy to Clipboard</button>
+            <button class="btn-download-options" onclick="downloadSubsetOptionsFile()">Download subset-options.json</button>
+          </div>
+        </div>
+        <div class="options-section" style="background:#fffbe6; border-left-color:#f90;">
+          <h3 style="color:#c60;">Usage Instructions</h3>
+          <p style="color:#666; font-size:0.9em; line-height:1.6;">
+            Save the options file and use it with the TDM subset command:<br><br>
+            <strong>Explain (dry run):</strong>
+            <code style="background:#fff; padding:8px 12px; display:block; border-radius:4px; border:1px solid #ddd; margin-bottom:12px;">
+              rgsubset explain --database-engine SqlServer --source-connection-string "[source]" --target-connection-string "[target]" --options-file subset-options.json
+            </code>
+            <strong>Run subset:</strong>
+            <code style="background:#fff; padding:8px 12px; display:block; border-radius:4px; border:1px solid #ddd;">
+              rgsubset run --database-engine SqlServer --source-connection-string "[source]" --target-connection-string "[target]" --options-file subset-options.json
+            </code>
+          </p>
+        </div>
+      </div>
+    </div>
     <div id="howToUseModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.35);z-index:2000;align-items:center;justify-content:center;">
       <div style="background:#fff;border-radius:12px;max-width:520px;padding:36px 32px;box-shadow:0 2px 18px rgba(200,0,0,0.18);margin:auto;position:relative;">
         <button id="closeHowToUse" style="position:absolute;top:12px;right:18px;font-size:1.5em;background:none;border:none;color:#c00;cursor:pointer;font-weight:700;">&times;</button>
@@ -238,6 +985,33 @@
           <li><b>Filter & Search:</b> Use the filtering options and search boxes to narrow down tables and columns. The <b>Show</b> switch lets you quickly view all tables, only those with classification/masking, or only those without.</li>
           <li><b>Session Persistence:</b> Uploaded files are remembered until you close the browser.</li>
         </ul>
+      </div>
+    </div>
+  </div>
+  <!-- Pending Changes Bar -->
+  <div id="changesBar" class="changes-bar">
+    <div class="changes-info">
+      <span class="changes-count" id="changesCount">0</span>
+      <span class="changes-text">pending changes</span>
+    </div>
+    <div class="changes-actions">
+      <button class="btn-discard" id="discardChangesBtn">Discard All</button>
+      <button class="btn-review" id="reviewChangesBtn">Review & Save</button>
+    </div>
+  </div>
+  <!-- Review Modal -->
+  <div id="reviewModal" class="review-modal">
+    <div class="review-modal-content">
+      <div class="review-header">
+        <h2>Review Your Changes</h2>
+        <button class="close-btn" id="closeReviewModal">&times;</button>
+      </div>
+      <div class="review-body" id="reviewBody">
+        <!-- Changes will be listed here -->
+      </div>
+      <div class="review-footer">
+        <button class="btn-cancel" id="cancelReview">Cancel</button>
+        <button class="btn-save" id="saveChanges">Save & Download Files</button>
       </div>
     </div>
   </div>
@@ -261,13 +1035,184 @@
           }
         });
     let data = null;
+    let originalData = null; // Store original for comparison
     let tables = [];
     let tableNames = [];
     let typeList = [];
     const tablesPerPage = 5;
     let currentPage = 1;
     let maskingData = null;
+    let originalMaskingData = null; // Store original for comparison
     let maskingTables = [];
+
+    // Pending changes tracking
+    let pendingChanges = {
+      classification: {}, // key: "tableName.colName", value: {oldValue, newValue, field: 'type'}
+      masking: {}         // key: "tableName.colName.field", value: {oldValue, newValue, field: 'dataset'|'deterministic'}
+    };
+
+    function addPendingChange(category, tableName, colName, field, oldValue, newValue) {
+      const key = `${tableName}.${colName}.${field}`;
+      if (oldValue === newValue || (oldValue === undefined && newValue === '') || (oldValue === '' && newValue === undefined)) {
+        // No actual change, or reverting to original
+        delete pendingChanges[category][key];
+      } else {
+        // Check if we're reverting to original value
+        const originalKey = key;
+        let isRevert = false;
+        // Get original value to check if we're reverting
+        if (category === 'classification' && originalData) {
+          const origTable = originalData.tables.find(t => t.name === tableName);
+          if (origTable) {
+            const origCol = origTable.columns.find(c => c.name === colName);
+            if (origCol && origCol[field] === newValue) isRevert = true;
+            if (!origCol?.[field] && !newValue) isRevert = true;
+          }
+        } else if (category === 'masking' && originalMaskingData) {
+          const origTable = originalMaskingData.tables.find(t => t.name === tableName);
+          if (origTable) {
+            const origCol = origTable.columns.find(c => c.name === colName);
+            if (origCol && origCol[field] === newValue) isRevert = true;
+            if (!origCol?.[field] && !newValue) isRevert = true;
+          }
+        }
+        if (isRevert) {
+          delete pendingChanges[category][key];
+        } else {
+          pendingChanges[category][key] = { tableName, colName, field, oldValue, newValue };
+        }
+      }
+      updateChangesBar();
+    }
+
+    function getTotalPendingChanges() {
+      return Object.keys(pendingChanges.classification).length + Object.keys(pendingChanges.masking).length;
+    }
+
+    function updateChangesBar() {
+      const total = getTotalPendingChanges();
+      const bar = document.getElementById('changesBar');
+      const count = document.getElementById('changesCount');
+      if (total > 0) {
+        bar.classList.add('visible');
+        count.textContent = total;
+      } else {
+        bar.classList.remove('visible');
+      }
+    }
+
+    function hasColumnChanged(category, tableName, colName, field) {
+      const key = `${tableName}.${colName}.${field}`;
+      return pendingChanges[category].hasOwnProperty(key);
+    }
+
+    function discardAllChanges() {
+      if (!confirm('Are you sure you want to discard all pending changes?')) return;
+      // Restore original data
+      if (originalData) {
+        data = JSON.parse(JSON.stringify(originalData));
+        tables = data.tables;
+      }
+      if (originalMaskingData) {
+        maskingData = JSON.parse(JSON.stringify(originalMaskingData));
+        maskingTables = maskingData.tables;
+      }
+      pendingChanges = { classification: {}, masking: {} };
+      updateChangesBar();
+      renderTables();
+      renderMaskingMap();
+    }
+
+    function showReviewModal() {
+      const modal = document.getElementById('reviewModal');
+      const body = document.getElementById('reviewBody');
+      const classificationChanges = Object.values(pendingChanges.classification);
+      const maskingChanges = Object.values(pendingChanges.masking);
+      
+      let html = '';
+      if (classificationChanges.length === 0 && maskingChanges.length === 0) {
+        html = '<div class="no-changes">No pending changes to save.</div>';
+      } else {
+        if (classificationChanges.length > 0) {
+          html += '<div class="review-section"><h3>Classification Changes (' + classificationChanges.length + ')</h3>';
+          classificationChanges.forEach(c => {
+            html += `<div class="review-item">
+              <span class="table-name">${c.tableName}</span> → 
+              <span class="col-name">${c.colName}</span>
+              <span class="change-arrow">:</span>
+              <span class="old-value">${c.oldValue || '(none)'}</span>
+              <span class="change-arrow">→</span>
+              <span class="new-value">${c.newValue || '(none)'}</span>
+            </div>`;
+          });
+          html += '</div>';
+        }
+        if (maskingChanges.length > 0) {
+          html += '<div class="review-section"><h3>Masking Changes (' + maskingChanges.length + ')</h3>';
+          maskingChanges.forEach(c => {
+            const fieldLabel = c.field === 'deterministic' ? 'Deterministic' : 'Dataset';
+            let oldVal = c.oldValue;
+            let newVal = c.newValue;
+            if (c.field === 'deterministic') {
+              oldVal = c.oldValue === true ? 'Yes' : c.oldValue === false ? 'No' : '(none)';
+              newVal = c.newValue === true ? 'Yes' : c.newValue === false ? 'No' : '(none)';
+            }
+            html += `<div class="review-item">
+              <span class="table-name">${c.tableName}</span> → 
+              <span class="col-name">${c.colName}</span> (${fieldLabel})
+              <span class="change-arrow">:</span>
+              <span class="old-value">${oldVal || '(none)'}</span>
+              <span class="change-arrow">→</span>
+              <span class="new-value">${newVal || '(none)'}</span>
+            </div>`;
+          });
+          html += '</div>';
+        }
+      }
+      body.innerHTML = html;
+      modal.classList.add('visible');
+    }
+
+    function hideReviewModal() {
+      document.getElementById('reviewModal').classList.remove('visible');
+    }
+
+    function saveAllChanges() {
+      const hasClassificationChanges = Object.keys(pendingChanges.classification).length > 0;
+      const hasMaskingChanges = Object.keys(pendingChanges.masking).length > 0;
+      
+      if (hasClassificationChanges && data) {
+        const jsonStr = JSON.stringify(data, null, 2);
+        window.saveJsonFile('classification.json', jsonStr);
+        sessionStorage.setItem('classificationJson', jsonStr);
+        originalData = JSON.parse(jsonStr); // Update original
+      }
+      if (hasMaskingChanges && maskingData) {
+        const jsonStr = JSON.stringify(maskingData, null, 2);
+        window.saveJsonFile('masking.json', jsonStr);
+        sessionStorage.setItem('maskingJson', jsonStr);
+        originalMaskingData = JSON.parse(jsonStr); // Update original
+      }
+      
+      // Clear pending changes
+      pendingChanges = { classification: {}, masking: {} };
+      updateChangesBar();
+      hideReviewModal();
+      renderTables();
+      renderMaskingMap();
+    }
+
+    // Setup review modal events
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('discardChangesBtn').onclick = discardAllChanges;
+      document.getElementById('reviewChangesBtn').onclick = showReviewModal;
+      document.getElementById('closeReviewModal').onclick = hideReviewModal;
+      document.getElementById('cancelReview').onclick = hideReviewModal;
+      document.getElementById('saveChanges').onclick = saveAllChanges;
+      document.getElementById('reviewModal').onclick = function(e) {
+        if (e.target === this) hideReviewModal();
+      };
+    });
 
     // Load from sessionStorage if available
     window.addEventListener('DOMContentLoaded', function() {
@@ -300,6 +1245,7 @@
       if (savedClassification) {
         try {
           data = JSON.parse(savedClassification);
+          originalData = JSON.parse(savedClassification); // Store original
           tables = data.tables || [];
           extractFilters();
           populateFilters();
@@ -315,6 +1261,7 @@
       if (savedMasking) {
         try {
           maskingData = JSON.parse(savedMasking);
+          originalMaskingData = JSON.parse(savedMasking); // Store original
           maskingTables = maskingData.tables || [];
           renderMaskingMap();
           hasMasking = true;
@@ -330,27 +1277,32 @@
       }
     });
 
-    // Tab logic
-    const tabClassification = document.getElementById('tabClassification');
-    const tabMasking = document.getElementById('tabMasking');
-    const tabSettings = document.getElementById('tabSettings');
-    const tabContentClassification = document.getElementById('tabContentClassification');
-    const tabContentMasking = document.getElementById('tabContentMasking');
-    const tabContentSettings = document.getElementById('tabContentSettings');
+    // Tab logic - define variables and functions
+    let tabClassification, tabMasking, tabSettings, tabOptions, tabSubset;
+    let tabContentClassification, tabContentMasking, tabContentSettings, tabContentOptions, tabContentSubset;
 
     function setActiveTab(tab) {
+      if (!tabClassification) return; // Safety check
       tabClassification.classList.remove('active');
       tabMasking.classList.remove('active');
       tabSettings.classList.remove('active');
+      tabOptions.classList.remove('active');
+      tabSubset.classList.remove('active');
       tabClassification.style.background = '#fff';
       tabClassification.style.color = '#c00';
       tabMasking.style.background = '#fff';
       tabMasking.style.color = '#c00';
       tabSettings.style.background = '#fff';
       tabSettings.style.color = '#c00';
+      tabOptions.style.background = '#fff';
+      tabOptions.style.color = '#c00';
+      tabSubset.style.background = '#fff';
+      tabSubset.style.color = '#c00';
       tabContentClassification.style.display = 'none';
       tabContentMasking.style.display = 'none';
       tabContentSettings.style.display = 'none';
+      tabContentOptions.style.display = 'none';
+      tabContentSubset.style.display = 'none';
       if (tab === 'classification') {
         tabClassification.classList.add('active');
         tabClassification.style.background = '#c00';
@@ -361,6 +1313,18 @@
         tabMasking.style.background = '#c00';
         tabMasking.style.color = '#fff';
         tabContentMasking.style.display = '';
+      } else if (tab === 'options') {
+        tabOptions.classList.add('active');
+        tabOptions.style.background = '#c00';
+        tabOptions.style.color = '#fff';
+        tabContentOptions.style.display = '';
+        updateOptionsPreview();
+      } else if (tab === 'subset') {
+        tabSubset.classList.add('active');
+        tabSubset.style.background = '#c00';
+        tabSubset.style.color = '#fff';
+        tabContentSubset.style.display = '';
+        updateSubsetPreview();
       } else if (tab === 'settings') {
         tabSettings.classList.add('active');
         tabSettings.style.background = '#c00';
@@ -369,9 +1333,37 @@
       }
     }
 
-    tabClassification.onclick = function() { setActiveTab('classification'); };
-    tabMasking.onclick = function() { setActiveTab('masking'); };
-    tabSettings.onclick = function() { setActiveTab('settings'); };
+    // Initialize tabs after DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get tab elements
+      tabClassification = document.getElementById('tabClassification');
+      tabMasking = document.getElementById('tabMasking');
+      tabSettings = document.getElementById('tabSettings');
+      tabOptions = document.getElementById('tabOptions');
+      tabSubset = document.getElementById('tabSubset');
+      tabContentClassification = document.getElementById('tabContentClassification');
+      tabContentMasking = document.getElementById('tabContentMasking');
+      tabContentSettings = document.getElementById('tabContentSettings');
+      tabContentOptions = document.getElementById('tabContentOptions');
+      tabContentSubset = document.getElementById('tabContentSubset');
+
+      // Set tab click handlers
+      if (tabClassification) tabClassification.onclick = function() { setActiveTab('classification'); };
+      if (tabMasking) tabMasking.onclick = function() { setActiveTab('masking'); };
+      if (tabSettings) tabSettings.onclick = function() { setActiveTab('settings'); };
+      if (tabOptions) tabOptions.onclick = function() { setActiveTab('options'); };
+      if (tabSubset) tabSubset.onclick = function() { setActiveTab('subset'); };
+
+      // Initialize options tab sub-tabs
+      initOptionsSubTabs();
+      initBuiltInRules();
+      initSubsetTabs();
+      // Initialize subset tab render
+      renderStartingTables();
+      renderSubsetExcludedTables();
+      renderStaticDataTables();
+      renderManualRelationships();
+    });
 
     // Set default tab
     // Default tab is now set in DOMContentLoaded based on file presence
@@ -427,6 +1419,61 @@
         .filter(Boolean);
     }
 
+      // Default classification types from Redgate documentation
+      const defaultClassificationTypes = [
+        "GivenNames", "FamilyNames", "FullNames", "StreetAddresses", "Cities", "Countries", "PostCodes", "PhoneNumbers", "EmailAddresses", "DatesOfBirth"
+      ];
+
+      // Helper function to get all available classification types including custom ones from options
+      function getAllClassificationTypes() {
+        const types = new Set(defaultClassificationTypes);
+        // Add custom classification types from options custom rules
+        if (optionsState && optionsState.customRules) {
+          optionsState.customRules.forEach(rule => {
+            if (rule.type) types.add(rule.type);
+          });
+        }
+        return Array.from(types).sort();
+      }
+
+      // Helper function to get classification types with custom indicator
+      function getClassificationTypesWithLabels() {
+        const builtIn = new Set(defaultClassificationTypes);
+        const result = defaultClassificationTypes.map(t => ({ name: t, isCustom: false }));
+        
+        if (optionsState && optionsState.customRules) {
+          optionsState.customRules.forEach(rule => {
+            if (rule.type && !builtIn.has(rule.type)) {
+              result.push({ name: rule.type, isCustom: true });
+            }
+          });
+        }
+        return result.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      // Function to identify potential keys (columns likely to be primary/foreign keys)
+      function identifyPotentialKeys(tables) {
+        // A column is a potential key if:
+        // 1. No maxLength (not a string field) AND
+        // 2. Name ends with "Id" or "ID" or "_id" (common key naming convention)
+        return function(col, tableName) {
+          // Must not have maxLength
+          if (col.maxLength !== undefined) return false;
+          
+          // Check if name ends with common ID suffixes
+          const colName = col.name;
+          const colNameLower = colName.toLowerCase();
+          
+          // Ends with 'id' (case insensitive)
+          if (colNameLower.endsWith('id')) return true;
+          
+          // Ends with '_id' (snake_case convention)
+          if (colNameLower.endsWith('_id')) return true;
+          
+          return false;
+        };
+      }
+
     function renderTables() {
       const filteredTables = getFilteredTables();
       const totalPages = Math.ceil(filteredTables.length / tablesPerPage);
@@ -447,24 +1494,43 @@
         return;
       }
       const typeVal = document.getElementById('typeFilter').value.trim();
-      tablesToShow.forEach(table => {
+      const isPotentialKey = identifyPotentialKeys(tables);
+      tablesToShow.forEach((table, tableIdx) => {
         const card = document.createElement('div');
         card.className = 'table-card';
         card.innerHTML = `<div class="table-title">${table.name} <span style="color:#888;font-size:0.9em;">(${table.schema})</span></div>`;
-        const tbl = document.createElement('table');
-        tbl.innerHTML = `<tr><th>Column</th><th>Classification Type</th><th>Max Length</th></tr>`;
-        let columnsToShow = table.columns;
-        if (typeVal) {
-          columnsToShow = columnsToShow.filter(col => col.type && col.type === typeVal);
-        }
-        columnsToShow.forEach(col => {
-          tbl.innerHTML += `<tr>
-            <td>${col.name}</td>
-            <td class="classification">${col.type ? col.type : '<span style=\"color:#bbb;\">-</span>'}</td>
-            <td>${col.maxLength !== undefined ? col.maxLength : ''}</td>
+        let tableHtml = `<table><thead><tr><th>Column</th><th>Type</th><th>Max Length</th></tr></thead><tbody>`;
+        table.columns.forEach((col, colIdx) => {
+          const isKey = isPotentialKey(col, table.name);
+          tableHtml += `<tr>
+            <td>${col.name}</td>`;
+          if (isKey && !col.type) {
+            tableHtml += `<td class="potential-key-cell" title="This column has no maxLength and ends with 'Id' - likely a primary or foreign key">
+              <span style="color:#666;">(Potential Key)</span>
+              <button class="override-btn" data-table="${tableIdx}" data-col="${colIdx}" data-type="classification-override" title="Override and edit this field">Override</button>
+              <div class="override-edit" data-table="${tableIdx}" data-col="${colIdx}" style="display:none;">
+                <select class="type-dropdown" data-table="${tableIdx}" data-col="${colIdx}" style="display:inline-block;">
+                  <option value="">(none)</option>
+                  ${getClassificationTypesWithLabels().map(t => `<option value="${t.name}">${t.isCustom ? '★ ' : ''}${t.name}</option>`).join('')}
+                </select>
+              </div>
+            </td>`;
+          } else {
+            const isModified = hasColumnChanged('classification', table.name, col.name, 'type');
+            tableHtml += `<td class="editable-cell${isModified ? ' cell-modified' : ''}" data-table="${tableIdx}" data-col="${colIdx}" data-type="classification">
+              <span class="classification">${col.type || '<span style="color:#bbb;font-style:italic;">Click to set</span>'}${isModified ? '<span class="modified-badge">modified</span>' : ''}</span>
+              <button class="edit-type-btn" data-table="${tableIdx}" data-col="${colIdx}">Edit</button>
+              <select class="type-dropdown" data-table="${tableIdx}" data-col="${colIdx}" style="display:none;">
+                <option value="">(none)</option>
+                ${getClassificationTypesWithLabels().map(t => `<option value="${t.name}">${t.isCustom ? '★ ' : ''}${t.name}</option>`).join('')}
+              </select>
+            </td>`;
+          }
+          tableHtml += `<td>${col.maxLength || ''}</td>
           </tr>`;
         });
-        card.appendChild(tbl);
+        tableHtml += '</tbody></table>';
+        card.innerHTML += tableHtml;
         tableList.appendChild(card);
       });
       // Pagination controls
@@ -474,11 +1540,76 @@
         for (let i = 1; i <= totalPages; i++) {
           const btn = document.createElement('button');
           btn.textContent = i;
-          btn.disabled = (i === currentPage);
+          btn.disabled = i === currentPage;
           btn.onclick = () => { currentPage = i; renderTables(); };
           pagination.appendChild(btn);
         }
       }
+      // Add override button logic for potential keys
+      document.querySelectorAll('.override-btn[data-type="classification-override"]').forEach(btn => {
+        btn.onclick = function(e) {
+          e.stopPropagation();
+          const tableIdx = +btn.getAttribute('data-table');
+          const colIdx = +btn.getAttribute('data-col');
+          const cell = btn.parentElement;
+          const overrideEdit = cell.querySelector('.override-edit');
+          const dropdown = cell.querySelector('.type-dropdown');
+          if (overrideEdit && dropdown) {
+            overrideEdit.style.display = 'inline-block';
+            btn.style.display = 'none';
+            cell.querySelector('span').style.display = 'none';
+            dropdown.focus();
+          }
+        };
+      });
+
+      // Add edit logic for type - both cell and button clicks
+      document.querySelectorAll('.editable-cell[data-type="classification"]').forEach(cell => {
+        cell.onclick = function(e) {
+          if (e.target.tagName === 'SELECT') return; // Don't trigger if clicking dropdown
+          const tableIdx = +cell.getAttribute('data-table');
+          const colIdx = +cell.getAttribute('data-col');
+          const dropdown = cell.querySelector('.type-dropdown');
+          const btn = cell.querySelector('.edit-type-btn');
+          const span = cell.querySelector('.classification');
+          if (dropdown.style.display === 'none' || !dropdown.style.display) {
+            dropdown.style.display = 'inline-block';
+            dropdown.value = tablesToShow[tableIdx].columns[colIdx].type || '';
+            if (btn) btn.style.display = 'none';
+            if (span) span.style.display = 'none';
+            dropdown.focus();
+          }
+        };
+      });
+      document.querySelectorAll('.type-dropdown').forEach(dropdown => {
+        dropdown.onchange = function() {
+          const tableIdx = +dropdown.getAttribute('data-table');
+          const colIdx = +dropdown.getAttribute('data-col');
+          const selectedType = dropdown.value;
+          // Find actual table/col in tables, not just filtered
+          const tableName = tablesToShow[tableIdx].name;
+          const colName = tablesToShow[tableIdx].columns[colIdx].name;
+          const tableObj = tables.find(t => t.name === tableName);
+          const colObj = tableObj.columns.find(c => c.name === colName);
+          const oldValue = colObj.type;
+          if (selectedType) {
+            colObj.type = selectedType;
+          } else {
+            delete colObj.type;
+          }
+          // Track pending change (don't save yet)
+          addPendingChange('classification', tableName, colName, 'type', oldValue, selectedType || undefined);
+          renderTables();
+        };
+        // Close dropdown on blur
+        dropdown.onblur = function() {
+          setTimeout(() => {
+            dropdown.style.display = 'none';
+            const span = dropdown.parentElement.querySelector('.classification');
+            if (span) span.style.display = '';
+          }, 200);
+        };
+      });
     }
 
     function showFilters() {
@@ -520,12 +1651,15 @@
           return;
         }
         tables = data.tables;
+        originalData = JSON.parse(evt.target.result); // Store original for change tracking
+        pendingChanges.classification = {}; // Clear pending changes
         extractFilters();
         populateFilters();
         showFilters();
         setupFilterEvents();
         currentPage = 1;
         renderTables();
+        updateChangesBar();
         // Save to sessionStorage
         sessionStorage.setItem('classificationJson', evt.target.result);
         showUploadSuccess('classification');
@@ -541,7 +1675,10 @@
         try {
           maskingData = JSON.parse(evt.target.result);
           maskingTables = maskingData.tables || [];
+          originalMaskingData = JSON.parse(evt.target.result); // Store original for change tracking
+          pendingChanges.masking = {}; // Clear pending changes
           renderMaskingMap();
+          updateChangesBar();
           // Save to sessionStorage
           sessionStorage.setItem('maskingJson', evt.target.result);
           showUploadSuccess('masking');
@@ -626,6 +1763,61 @@
       });
     }
 
+      // Default masking datasets from Redgate documentation
+      const defaultMaskingDatasets = [
+        "GivenNames", "FamilyNames", "FullNames", "StreetAddresses", "Cities", "Countries", "PostCodes", "PhoneNumbers", "EmailAddresses", "DatesOfBirth"
+      ];
+
+      // Helper function to get all available masking datasets including custom ones from options
+      function getAllMaskingDatasets() {
+        const datasets = new Set(defaultMaskingDatasets);
+        // Add custom datasets from options
+        if (optionsState && optionsState.customDatasets) {
+          optionsState.customDatasets.forEach(ds => {
+            if (ds.name) datasets.add(ds.name);
+          });
+        }
+        return Array.from(datasets).sort();
+      }
+
+      // Helper function to get masking datasets with custom indicator
+      function getMaskingDatasetsWithLabels() {
+        const builtIn = new Set(defaultMaskingDatasets);
+        const result = defaultMaskingDatasets.map(ds => ({ name: ds, isCustom: false }));
+        
+        if (optionsState && optionsState.customDatasets) {
+          optionsState.customDatasets.forEach(ds => {
+            if (ds.name && !builtIn.has(ds.name)) {
+              result.push({ name: ds.name, isCustom: true });
+            }
+          });
+        }
+        return result.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      // Function to identify potential keys for masking tables
+      function identifyPotentialKeysMasking(tables) {
+        // A column is a potential key if:
+        // 1. No maxLength (not a string field) AND
+        // 2. Name ends with "Id" or "ID" or "_id" (common key naming convention)
+        return function(col, tableName) {
+          // Must not have maxLength
+          if (col.maxLength !== undefined) return false;
+          
+          // Check if name ends with common ID suffixes
+          const colName = col.name;
+          const colNameLower = colName.toLowerCase();
+          
+          // Ends with 'id' (case insensitive)
+          if (colNameLower.endsWith('id')) return true;
+          
+          // Ends with '_id' (snake_case convention)
+          if (colNameLower.endsWith('_id')) return true;
+          
+          return false;
+        };
+      }
+
     function renderMaskingMap() {
       const container = document.getElementById('maskingMapContent');
       if (!maskingData || !maskingTables || maskingTables.length === 0) {
@@ -669,23 +1861,1242 @@
         };
       }
       const filteredTables = getFilteredMaskingTables();
+      const isPotentialKeyMasking = identifyPotentialKeysMasking(maskingTables);
       let html = '';
-      filteredTables.forEach(table => {
-        html += `<div class=\"table-card\">`
-          + `<div class=\"table-title\">${table.name} <span style=\"color:#888;font-size:0.9em;\">(${table.schema})</span></div>`
-          + `<table><tr><th>Column</th><th>Masking Dataset</th><th>Deterministic</th><th>Max Length</th></tr>`;
-        table.columns.forEach(col => {
-          html += `<tr>`
-            + `<td>${col.name}</td>`
-            + `<td>${col.dataset ? `<span style='color:#c00;font-weight:600;'>${col.dataset}</span>` : '<span style=\"color:#bbb;\">-</span>'}</td>`
-            + `<td>${typeof col.deterministic === 'boolean' ? (col.deterministic ? 'Yes' : 'No') : ''}</td>`
-            + `<td>${col.maxLength !== undefined ? col.maxLength : ''}</td>`
-            + `</tr>`;
+      filteredTables.forEach((table, tableIdx) => {
+        html += `<div class="table-card"><div class="table-title">${table.name} <span style="color:#888;font-size:0.9em;">(${table.schema})</span></div><table><thead><tr><th>Column</th><th>Dataset</th><th>Deterministic</th><th>Max Length</th></tr></thead><tbody>`;
+        table.columns.forEach((col, colIdx) => {
+          const isKey = isPotentialKeyMasking(col, table.name);
+          html += `<tr>
+            <td>${col.name}</td>`;
+          if (isKey && !col.dataset) {
+            html += `<td class="potential-key-cell" title="This column has no maxLength and ends with 'Id' - likely a primary or foreign key">
+              <span style="color:#666;">(Potential Key)</span>
+              <button class="override-btn" data-table="${tableIdx}" data-col="${colIdx}" data-type="dataset-override" title="Override and edit this field">Override</button>
+              <div class="override-edit" data-table="${tableIdx}" data-col="${colIdx}" style="display:none;">
+                <select class="dataset-dropdown" data-table="${tableIdx}" data-col="${colIdx}" style="display:inline-block;">
+                  <option value="">(none)</option>
+                  ${getMaskingDatasetsWithLabels().map(ds => `<option value="${ds.name}">${ds.isCustom ? '★ ' : ''}${ds.name}</option>`).join('')}
+                </select>
+              </div>
+            </td>
+            <td class="potential-key-cell">
+              <span style="color:#666;"></span>
+              <button class="override-btn" data-table="${tableIdx}" data-col="${colIdx}" data-type="deterministic-override" title="Override and edit this field">Override</button>
+            </td>`;
+          } else {
+            const isDatasetModified = hasColumnChanged('masking', table.name, col.name, 'dataset');
+            const isDeterministicModified = hasColumnChanged('masking', table.name, col.name, 'deterministic');
+            html += `<td class="editable-cell${isDatasetModified ? ' cell-modified' : ''}" data-table="${tableIdx}" data-col="${colIdx}" data-type="dataset">
+              <span class="classification">${col.dataset || '<span style="color:#bbb;font-style:italic;">Click to set</span>'}${isDatasetModified ? '<span class="modified-badge">modified</span>' : ''}</span>
+              <button class="edit-dataset-btn" data-table="${tableIdx}" data-col="${colIdx}">Edit</button>
+              <select class="dataset-dropdown" data-table="${tableIdx}" data-col="${colIdx}" style="display:none;">
+                <option value="">(none)</option>
+                ${getMaskingDatasetsWithLabels().map(ds => `<option value="${ds.name}">${ds.isCustom ? '★ ' : ''}${ds.name}</option>`).join('')}
+              </select>
+            </td>
+            <td class="editable-cell${isDeterministicModified ? ' cell-modified' : ''}" data-table="${tableIdx}" data-col="${colIdx}" data-type="deterministic" style="cursor:pointer;">
+              <span>${col.deterministic === true ? 'Yes' : col.deterministic === false ? 'No' : '<span style="color:#bbb;font-style:italic;">Click to toggle</span>'}${isDeterministicModified ? '<span class="modified-badge">modified</span>' : ''}</span>
+              <button class="edit-deterministic-btn" data-table="${tableIdx}" data-col="${colIdx}">Toggle</button>
+            </td>`;
+          }
+          html += `<td>${col.maxLength || ''}</td>
+          </tr>`;
         });
-        html += '</table></div>';
+        html += '</tbody></table></div>';
       });
       container.innerHTML = html;
+      // Add override button logic for masking dataset
+      document.querySelectorAll('.override-btn[data-type="dataset-override"]').forEach(btn => {
+        btn.onclick = function(e) {
+          e.stopPropagation();
+          const tableIdx = +btn.getAttribute('data-table');
+          const colIdx = +btn.getAttribute('data-col');
+          const cell = btn.parentElement;
+          const overrideEdit = cell.querySelector('.override-edit');
+          const dropdown = cell.querySelector('.dataset-dropdown');
+          if (overrideEdit && dropdown) {
+            overrideEdit.style.display = 'inline-block';
+            btn.style.display = 'none';
+            cell.querySelector('span').style.display = 'none';
+            dropdown.focus();
+          }
+        };
+      });
+
+      // Add override button logic for deterministic on potential keys
+      document.querySelectorAll('.override-btn[data-type="deterministic-override"]').forEach(btn => {
+        btn.onclick = function(e) {
+          e.stopPropagation();
+          const tableIdx = +btn.getAttribute('data-table');
+          const colIdx = +btn.getAttribute('data-col');
+          // Find actual table/col in maskingTables
+          const tableName = filteredTables[tableIdx].name;
+          const colName = filteredTables[tableIdx].columns[colIdx].name;
+          const tableObj = maskingTables.find(t => t.name === tableName);
+          const colObj = tableObj.columns.find(c => c.name === colName);
+          const oldValue = colObj.deterministic;
+          colObj.deterministic = !(colObj.deterministic === true);
+          // Track pending change (don't save yet)
+          addPendingChange('masking', tableName, colName, 'deterministic', oldValue, colObj.deterministic);
+          renderMaskingMap();
+        };
+      });
+
+      // Add edit logic for dataset - both cell and button clicks
+      document.querySelectorAll('.editable-cell[data-type="dataset"]').forEach(cell => {
+        cell.onclick = function(e) {
+          if (e.target.tagName === 'SELECT') return;
+          const tableIdx = +cell.getAttribute('data-table');
+          const colIdx = +cell.getAttribute('data-col');
+          const dropdown = cell.querySelector('.dataset-dropdown');
+          const btn = cell.querySelector('.edit-dataset-btn');
+          const span = cell.querySelector('.classification');
+          if (dropdown.style.display === 'none' || !dropdown.style.display) {
+            dropdown.style.display = 'inline-block';
+            dropdown.value = filteredTables[tableIdx].columns[colIdx].dataset || '';
+            if (btn) btn.style.display = 'none';
+            if (span) span.style.display = 'none';
+            dropdown.focus();
+          }
+        };
+      });
+      document.querySelectorAll('.dataset-dropdown').forEach(dropdown => {
+        dropdown.onchange = function() {
+          const tableIdx = +dropdown.getAttribute('data-table');
+          const colIdx = +dropdown.getAttribute('data-col');
+          const selectedDataset = dropdown.value;
+          // Find actual table/col in maskingTables, not just filtered
+          const tableName = filteredTables[tableIdx].name;
+          const colName = filteredTables[tableIdx].columns[colIdx].name;
+          const tableObj = maskingTables.find(t => t.name === tableName);
+          const colObj = tableObj.columns.find(c => c.name === colName);
+          const oldValue = colObj.dataset;
+          if (selectedDataset) {
+            colObj.dataset = selectedDataset;
+          } else {
+            delete colObj.dataset;
+          }
+          // Track pending change (don't save yet)
+          addPendingChange('masking', tableName, colName, 'dataset', oldValue, selectedDataset || undefined);
+          renderMaskingMap();
+        };
+        dropdown.onblur = function() {
+          setTimeout(() => {
+            dropdown.style.display = 'none';
+            const span = dropdown.parentElement.querySelector('.classification');
+            if (span) span.style.display = '';
+          }, 200);
+        };
+      });
+      // Add toggle logic for deterministic - both cell and button clicks
+      document.querySelectorAll('.editable-cell[data-type="deterministic"]').forEach(cell => {
+        cell.onclick = function(e) {
+          const tableIdx = +cell.getAttribute('data-table');
+          const colIdx = +cell.getAttribute('data-col');
+          // Find actual table/col in maskingTables, not just filtered
+          const tableName = filteredTables[tableIdx].name;
+          const colName = filteredTables[tableIdx].columns[colIdx].name;
+          const tableObj = maskingTables.find(t => t.name === tableName);
+          const colObj = tableObj.columns.find(c => c.name === colName);
+          const oldValue = colObj.deterministic;
+          colObj.deterministic = !(colObj.deterministic === true);
+          // Track pending change (don't save yet)
+          addPendingChange('masking', tableName, colName, 'deterministic', oldValue, colObj.deterministic);
+          renderMaskingMap();
+        };
+      });
     }
+
+    // Helper to save JSON file (overwrites existing)
+    window.saveJsonFile = function(filename, content) {
+      // For browser: download file
+      var blob = new window.Blob([content], { type: 'application/json' });
+      var a = document.createElement('a');
+      a.href = window.URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function() { document.body.removeChild(a); }, 100);
+    };
+
+    // ===== Classification Options Tab Functionality =====
+    
+    // All built-in classification types from Redgate
+    const allBuiltInClassificationTypes = [
+      "Cities", "Countries", "CreditCardNumbers", "DatesOfBirth", "EmailAddresses",
+      "FamilyNames", "FullNames", "GivenNames", "IPAddresses", "PassportNumbers",
+      "PhoneNumbers", "PostCodes", "StreetAddresses", "UKCounties",
+      "UKNationalInsuranceNumbers", "USSocialSecurityNumbers", "ZipCodes"
+    ];
+
+    // State for options file builder
+    let optionsState = {
+      builtInRules: {}, // { ruleName: true/false }
+      customRules: [], // [{ type, confidence, condition }]
+      customDatasets: [], // [{ name, type, values/expression/conditions/file }]
+      excludeTables: [], // [{ schema, name }]
+      excludeColumns: [], // [{ schema, tableName, columnName }]
+      overrideColumns: [] // [{ schema, tableName, columnName, type }]
+    };
+
+    // Initialize built-in rules (all enabled by default)
+    function initBuiltInRules() {
+      allBuiltInClassificationTypes.forEach(type => {
+        optionsState.builtInRules[type] = true;
+      });
+      renderBuiltInRules();
+    }
+
+    function renderBuiltInRules() {
+      const container = document.getElementById('builtInRulesContainer');
+      if (!container) return;
+      container.innerHTML = allBuiltInClassificationTypes.map(type => `
+        <div class="rule-toggle">
+          <label for="rule_${type}">${type}</label>
+          <input type="checkbox" id="rule_${type}" ${optionsState.builtInRules[type] ? 'checked' : ''} 
+                 onchange="toggleBuiltInRule('${type}', this.checked)">
+        </div>
+      `).join('');
+    }
+
+    function toggleBuiltInRule(type, enabled) {
+      optionsState.builtInRules[type] = enabled;
+      updateOptionsPreview();
+    }
+
+    function selectAllBuiltInRules(enable) {
+      allBuiltInClassificationTypes.forEach(type => {
+        optionsState.builtInRules[type] = enable;
+      });
+      renderBuiltInRules();
+      updateOptionsPreview();
+    }
+
+    // Custom Rules
+    function addCustomRule() {
+      optionsState.customRules.push({
+        type: '',
+        confidence: 'High',
+        condition: ''
+      });
+      renderCustomRules();
+      updateOptionsPreview();
+    }
+
+    function removeCustomRule(index) {
+      optionsState.customRules.splice(index, 1);
+      renderCustomRules();
+      updateOptionsPreview();
+    }
+
+    function updateCustomRule(index, field, value) {
+      optionsState.customRules[index][field] = value;
+      updateOptionsPreview();
+    }
+
+    function renderCustomRules() {
+      const container = document.getElementById('customRulesContainer');
+      if (!container) return;
+      if (optionsState.customRules.length === 0) {
+        container.innerHTML = '<p style="color:#888; font-style:italic;">No custom rules defined. Click "Add Custom Rule" to create one.</p>';
+        return;
+      }
+      container.innerHTML = optionsState.customRules.map((rule, i) => `
+        <div class="custom-rule">
+          <div class="rule-header">
+            <div class="field-group" style="flex:1;">
+              <label>Classification Type Name</label>
+              <input type="text" value="${rule.type}" placeholder="e.g., CompanyNames" 
+                     onchange="updateCustomRule(${i}, 'type', this.value)">
+            </div>
+            <div class="field-group">
+              <label>Confidence</label>
+              <select onchange="updateCustomRule(${i}, 'confidence', this.value)">
+                <option value="High" ${rule.confidence === 'High' ? 'selected' : ''}>High</option>
+                <option value="Medium" ${rule.confidence === 'Medium' ? 'selected' : ''}>Medium</option>
+                <option value="Low" ${rule.confidence === 'Low' ? 'selected' : ''}>Low</option>
+              </select>
+            </div>
+            <button class="btn-remove-rule" onclick="removeCustomRule(${i})">Remove</button>
+          </div>
+          <div class="field-group">
+            <label>Condition</label>
+            <input type="text" class="condition-input" value="${rule.condition}" 
+                   placeholder="Column.Name contains 'Company' AND Column.Name contains 'Name'"
+                   onchange="updateCustomRule(${i}, 'condition', this.value)">
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Table Exclusions
+    function addExcludeTable() {
+      optionsState.excludeTables.push({ schema: 'dbo', name: '' });
+      renderExcludeTables();
+      updateOptionsPreview();
+    }
+
+    function removeExcludeTable(index) {
+      optionsState.excludeTables.splice(index, 1);
+      renderExcludeTables();
+      updateOptionsPreview();
+    }
+
+    function updateExcludeTable(index, field, value) {
+      optionsState.excludeTables[index][field] = value;
+      updateOptionsPreview();
+    }
+
+    function renderExcludeTables() {
+      const container = document.getElementById('excludeTablesContainer');
+      if (!container) return;
+      if (optionsState.excludeTables.length === 0) {
+        container.innerHTML = '<p style="color:#888; font-style:italic;">No table exclusions defined.</p>';
+        return;
+      }
+      container.innerHTML = optionsState.excludeTables.map((table, i) => `
+        <div class="override-item">
+          <div class="field-group">
+            <label>Schema</label>
+            <input type="text" value="${table.schema}" placeholder="dbo" 
+                   onchange="updateExcludeTable(${i}, 'schema', this.value)">
+          </div>
+          <div class="field-group">
+            <label>Table Name</label>
+            <input type="text" value="${table.name}" placeholder="TableName" 
+                   onchange="updateExcludeTable(${i}, 'name', this.value)">
+          </div>
+          <div></div>
+          <button class="btn-remove-rule" onclick="removeExcludeTable(${i})">Remove</button>
+        </div>
+      `).join('');
+    }
+
+    // Column Exclusions
+    function addExcludeColumn() {
+      optionsState.excludeColumns.push({ schema: 'dbo', tableName: '', columnName: '' });
+      renderExcludeColumns();
+      updateOptionsPreview();
+    }
+
+    function removeExcludeColumn(index) {
+      optionsState.excludeColumns.splice(index, 1);
+      renderExcludeColumns();
+      updateOptionsPreview();
+    }
+
+    function updateExcludeColumn(index, field, value) {
+      optionsState.excludeColumns[index][field] = value;
+      updateOptionsPreview();
+    }
+
+    function renderExcludeColumns() {
+      const container = document.getElementById('excludeColumnsContainer');
+      if (!container) return;
+      if (optionsState.excludeColumns.length === 0) {
+        container.innerHTML = '<p style="color:#888; font-style:italic;">No column exclusions defined.</p>';
+        return;
+      }
+      container.innerHTML = optionsState.excludeColumns.map((col, i) => `
+        <div class="override-item">
+          <div class="field-group">
+            <label>Schema</label>
+            <input type="text" value="${col.schema}" placeholder="dbo" 
+                   onchange="updateExcludeColumn(${i}, 'schema', this.value)">
+          </div>
+          <div class="field-group">
+            <label>Table Name</label>
+            <input type="text" value="${col.tableName}" placeholder="TableName" 
+                   onchange="updateExcludeColumn(${i}, 'tableName', this.value)">
+          </div>
+          <div class="field-group">
+            <label>Column Name</label>
+            <input type="text" value="${col.columnName}" placeholder="ColumnName" 
+                   onchange="updateExcludeColumn(${i}, 'columnName', this.value)">
+          </div>
+          <button class="btn-remove-rule" onclick="removeExcludeColumn(${i})">Remove</button>
+        </div>
+      `).join('');
+    }
+
+    // Column Overrides
+    function addOverrideColumn() {
+      optionsState.overrideColumns.push({ schema: 'dbo', tableName: '', columnName: '', type: '' });
+      renderOverrideColumns();
+      updateOptionsPreview();
+    }
+
+    function removeOverrideColumn(index) {
+      optionsState.overrideColumns.splice(index, 1);
+      renderOverrideColumns();
+      updateOptionsPreview();
+    }
+
+    function updateOverrideColumn(index, field, value) {
+      optionsState.overrideColumns[index][field] = value;
+      updateOptionsPreview();
+    }
+
+    function renderOverrideColumns() {
+      const container = document.getElementById('overrideColumnsContainer');
+      if (!container) return;
+      if (optionsState.overrideColumns.length === 0) {
+        container.innerHTML = '<p style="color:#888; font-style:italic;">No column overrides defined.</p>';
+        return;
+      }
+      const typeOptions = [...allBuiltInClassificationTypes, '(custom)'].map(t => 
+        `<option value="${t === '(custom)' ? '' : t}">${t}</option>`
+      ).join('');
+      container.innerHTML = optionsState.overrideColumns.map((col, i) => `
+        <div class="override-item column-override">
+          <div class="field-group">
+            <label>Schema</label>
+            <input type="text" value="${col.schema}" placeholder="dbo" 
+                   onchange="updateOverrideColumn(${i}, 'schema', this.value)">
+          </div>
+          <div class="field-group">
+            <label>Table Name</label>
+            <input type="text" value="${col.tableName}" placeholder="TableName" 
+                   onchange="updateOverrideColumn(${i}, 'tableName', this.value)">
+          </div>
+          <div class="field-group">
+            <label>Column Name</label>
+            <input type="text" value="${col.columnName}" placeholder="ColumnName" 
+                   onchange="updateOverrideColumn(${i}, 'columnName', this.value)">
+          </div>
+          <div class="field-group">
+            <label>Classification Type</label>
+            <input type="text" value="${col.type}" placeholder="GivenNames" 
+                   onchange="updateOverrideColumn(${i}, 'type', this.value)" list="classificationTypes">
+            <datalist id="classificationTypes">
+              ${allBuiltInClassificationTypes.map(t => `<option value="${t}">`).join('')}
+            </datalist>
+          </div>
+          <button class="btn-remove-rule" onclick="removeOverrideColumn(${i})">Remove</button>
+        </div>
+      `).join('');
+    }
+
+    // Generate the options JSON
+    function generateOptionsJson() {
+      const options = {};
+
+      // Built-in rules configuration
+      const enabledRules = [];
+      const disabledRules = [];
+      allBuiltInClassificationTypes.forEach(type => {
+        if (optionsState.builtInRules[type]) {
+          enabledRules.push(type);
+        } else {
+          disabledRules.push(type);
+        }
+      });
+
+      // Only add classifications section if not all rules are enabled
+      if (disabledRules.length > 0 || optionsState.customRules.length > 0) {
+        options.classifications = {};
+        
+        if (disabledRules.length > 0) {
+          options.classifications.builtIn = {
+            enabled: enabledRules,
+            disabled: disabledRules
+          };
+        }
+
+        // Custom rules
+        const validCustomRules = optionsState.customRules.filter(r => r.type && r.condition);
+        if (validCustomRules.length > 0) {
+          options.classifications.custom = validCustomRules.map(r => ({
+            type: r.type,
+            confidence: r.confidence,
+            condition: r.condition
+          }));
+        }
+      }
+
+      // Custom datasets
+      const validDatasets = optionsState.customDatasets.filter(ds => ds.name);
+      if (validDatasets.length > 0) {
+        options.datasets = validDatasets.map(ds => {
+          const dataset = { name: ds.name, type: ds.type };
+          switch (ds.type) {
+            case 'List':
+              if (ds.values) {
+                dataset.values = ds.values.split(',').map(v => v.trim()).filter(v => v);
+              }
+              break;
+            case 'Expression':
+              if (ds.expression) {
+                dataset.expression = ds.expression;
+              }
+              break;
+            case 'Conditional':
+              if (ds.conditions) {
+                try {
+                  dataset.conditions = JSON.parse(ds.conditions);
+                } catch (e) {
+                  dataset.conditions = [];
+                  dataset.comment = 'Error parsing conditions JSON';
+                }
+              }
+              break;
+            case 'File':
+              if (ds.file) {
+                dataset.file = ds.file;
+              }
+              break;
+          }
+          return dataset;
+        });
+      }
+
+      // Tables configuration (exclusions and overrides)
+      const tablesMap = {}; // key: "schema.tableName", value: table config
+
+      // Add table exclusions
+      optionsState.excludeTables.filter(t => t.name).forEach(t => {
+        const key = `${t.schema}.${t.name}`;
+        if (!tablesMap[key]) {
+          tablesMap[key] = { schema: t.schema, name: t.name };
+        }
+        tablesMap[key].exclude = true;
+      });
+
+      // Add column exclusions
+      optionsState.excludeColumns.filter(c => c.tableName && c.columnName).forEach(c => {
+        const key = `${c.schema}.${c.tableName}`;
+        if (!tablesMap[key]) {
+          tablesMap[key] = { schema: c.schema, name: c.tableName };
+        }
+        if (!tablesMap[key].columns) tablesMap[key].columns = [];
+        tablesMap[key].columns.push({
+          name: c.columnName,
+          exclude: true
+        });
+      });
+
+      // Add column overrides
+      optionsState.overrideColumns.filter(c => c.tableName && c.columnName && c.type).forEach(c => {
+        const key = `${c.schema}.${c.tableName}`;
+        if (!tablesMap[key]) {
+          tablesMap[key] = { schema: c.schema, name: c.tableName };
+        }
+        if (!tablesMap[key].columns) tablesMap[key].columns = [];
+        // Check if column already exists (from exclusion)
+        const existingCol = tablesMap[key].columns.find(col => col.name === c.columnName);
+        if (existingCol) {
+          existingCol.type = c.type;
+        } else {
+          tablesMap[key].columns.push({
+            name: c.columnName,
+            type: c.type
+          });
+        }
+      });
+
+      // Convert tables map to array
+      const tablesArray = Object.values(tablesMap);
+      if (tablesArray.length > 0) {
+        options.tables = tablesArray;
+      }
+
+      return options;
+    }
+
+    function updateOptionsPreview() {
+      const preview = document.getElementById('optionsPreview');
+      if (preview) {
+        const options = generateOptionsJson();
+        if (Object.keys(options).length === 0) {
+          preview.textContent = '// No custom options configured.\n// The classify command will use default settings.';
+        } else {
+          preview.textContent = JSON.stringify(options, null, 2);
+        }
+      }
+    }
+
+    function copyOptionsToClipboard() {
+      const options = generateOptionsJson();
+      const text = Object.keys(options).length === 0 
+        ? '{}' 
+        : JSON.stringify(options, null, 2);
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Options JSON copied to clipboard!');
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+      });
+    }
+
+    function downloadOptionsFile() {
+      const options = generateOptionsJson();
+      const content = Object.keys(options).length === 0 
+        ? '{}' 
+        : JSON.stringify(options, null, 2);
+      window.saveJsonFile('classification-options.json', content);
+    }
+
+    // Options sub-tabs
+    function initOptionsSubTabs() {
+      const subTabs = {
+        'subTabBuiltIn': 'subContentBuiltIn',
+        'subTabCustomRules': 'subContentCustomRules',
+        'subTabDatasets': 'subContentDatasets',
+        'subTabOverrides': 'subContentOverrides',
+        'subTabPreview': 'subContentPreview'
+      };
+
+      Object.keys(subTabs).forEach(tabId => {
+        const tab = document.getElementById(tabId);
+        if (tab) {
+          tab.onclick = function() {
+            // Remove active class from all sub-tabs
+            Object.keys(subTabs).forEach(t => {
+              document.getElementById(t)?.classList.remove('active');
+              document.getElementById(subTabs[t]).style.display = 'none';
+            });
+            // Activate clicked tab
+            tab.classList.add('active');
+            document.getElementById(subTabs[tabId]).style.display = '';
+            // Update preview when switching to preview tab
+            if (tabId === 'subTabPreview') {
+              updateOptionsPreview();
+            }
+          };
+        }
+      });
+
+      // Initialize renders
+      renderCustomRules();
+      renderCustomDatasets();
+      renderExcludeTables();
+      renderExcludeColumns();
+      renderOverrideColumns();
+    }
+
+    // Custom Datasets
+    function addCustomDataset() {
+      optionsState.customDatasets.push({
+        name: '',
+        type: 'List',
+        values: '',
+        expression: '',
+        conditions: '',
+        file: ''
+      });
+      renderCustomDatasets();
+      updateOptionsPreview();
+    }
+
+    function removeCustomDataset(index) {
+      optionsState.customDatasets.splice(index, 1);
+      renderCustomDatasets();
+      updateOptionsPreview();
+    }
+
+    function updateCustomDataset(index, field, value) {
+      optionsState.customDatasets[index][field] = value;
+      renderCustomDatasets();
+      updateOptionsPreview();
+    }
+
+    function renderCustomDatasets() {
+      const container = document.getElementById('customDatasetsContainer');
+      if (!container) return;
+      if (optionsState.customDatasets.length === 0) {
+        container.innerHTML = '<p style="color:#888; font-style:italic;">No custom datasets defined. Click "Add Custom Dataset" to create one.</p>';
+        return;
+      }
+      container.innerHTML = optionsState.customDatasets.map((ds, i) => {
+        let typeSpecificFields = '';
+        switch (ds.type) {
+          case 'List':
+            typeSpecificFields = `
+              <div class="field-group" style="margin-top:12px;">
+                <label>Values (comma-separated)</label>
+                <textarea style="width:100%; min-height:60px; padding:8px; border:1px solid #ccc; border-radius:4px; font-family:inherit;" 
+                          placeholder="Value1, Value2, Value3"
+                          onchange="updateCustomDataset(${i}, 'values', this.value)">${ds.values || ''}</textarea>
+              </div>`;
+            break;
+          case 'Expression':
+            typeSpecificFields = `
+              <div class="field-group" style="margin-top:12px;">
+                <label>Expression</label>
+                <input type="text" style="width:100%;" value="${ds.expression || ''}" 
+                       placeholder="$(GivenNames($[FirstName])).$(FamilyNames($[LastName]))@$(Domains)"
+                       onchange="updateCustomDataset(${i}, 'expression', this.value)">
+                <small style="color:#888;">Use $(DatasetName) to reference other datasets, $[ColumnName] to reference column values</small>
+              </div>`;
+            break;
+          case 'Conditional':
+            typeSpecificFields = `
+              <div class="field-group" style="margin-top:12px;">
+                <label>Conditions (JSON format)</label>
+                <textarea style="width:100%; min-height:80px; padding:8px; border:1px solid #ccc; border-radius:4px; font-family:monospace; font-size:0.9em;" 
+                          placeholder='[{ "if": "$[Country] == \\"USA\\"", "then": "USCities" }, { "otherwise": "Cities" }]'
+                          onchange="updateCustomDataset(${i}, 'conditions', this.value)">${ds.conditions || ''}</textarea>
+                <small style="color:#888;">Use $[ColumnName] to reference column values in conditions</small>
+              </div>`;
+            break;
+          case 'File':
+            typeSpecificFields = `
+              <div class="field-group" style="margin-top:12px;">
+                <label>File Path</label>
+                <input type="text" style="width:100%;" value="${ds.file || ''}" 
+                       placeholder="C:\\path\\to\\data.txt or relative: data.txt"
+                       onchange="updateCustomDataset(${i}, 'file', this.value)">
+                <small style="color:#888;">Path to a .txt file with one value per line</small>
+              </div>`;
+            break;
+        }
+        return `
+          <div class="custom-rule">
+            <div class="rule-header">
+              <div class="field-group" style="flex:1;">
+                <label>Dataset Name</label>
+                <input type="text" value="${ds.name}" placeholder="MyCustomDataset" 
+                       onchange="updateCustomDataset(${i}, 'name', this.value)">
+              </div>
+              <div class="field-group">
+                <label>Type</label>
+                <select onchange="updateCustomDataset(${i}, 'type', this.value)">
+                  <option value="List" ${ds.type === 'List' ? 'selected' : ''}>List</option>
+                  <option value="Expression" ${ds.type === 'Expression' ? 'selected' : ''}>Expression</option>
+                  <option value="Conditional" ${ds.type === 'Conditional' ? 'selected' : ''}>Conditional</option>
+                  <option value="File" ${ds.type === 'File' ? 'selected' : ''}>File</option>
+                </select>
+              </div>
+              <button class="btn-remove-rule" onclick="removeCustomDataset(${i})">Remove</button>
+            </div>
+            ${typeSpecificFields}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ============================================
+    // Subset Options Tab Functions
+    // ============================================
+    
+    let subsetStartingTables = [];
+    let subsetExcludedTables = [];
+    let subsetStaticDataTables = [];
+    let subsetManualRelationships = [];
+
+    // Initialize Subset Tab Sub-navigation
+    function initSubsetTabs() {
+      const subsetTabStarting = document.getElementById('subsetTabStarting');
+      const subsetTabExcluded = document.getElementById('subsetTabExcluded');
+      const subsetTabStatic = document.getElementById('subsetTabStatic');
+      const subsetTabRelationships = document.getElementById('subsetTabRelationships');
+      const subsetTabSettings = document.getElementById('subsetTabSettings');
+      const subsetTabPreview = document.getElementById('subsetTabPreview');
+
+      const subsetContentStarting = document.getElementById('subsetContentStarting');
+      const subsetContentExcluded = document.getElementById('subsetContentExcluded');
+      const subsetContentStatic = document.getElementById('subsetContentStatic');
+      const subsetContentRelationships = document.getElementById('subsetContentRelationships');
+      const subsetContentSettings = document.getElementById('subsetContentSettings');
+      const subsetContentPreview = document.getElementById('subsetContentPreview');
+
+      function setActiveSubsetTab(activeTab) {
+        // Hide all content
+        [subsetContentStarting, subsetContentExcluded, subsetContentStatic, 
+         subsetContentRelationships, subsetContentSettings, subsetContentPreview].forEach(c => c.style.display = 'none');
+        // Remove active from all tabs
+        [subsetTabStarting, subsetTabExcluded, subsetTabStatic, 
+         subsetTabRelationships, subsetTabSettings, subsetTabPreview].forEach(t => t.classList.remove('active'));
+        
+        switch(activeTab) {
+          case 'starting':
+            subsetContentStarting.style.display = '';
+            subsetTabStarting.classList.add('active');
+            break;
+          case 'excluded':
+            subsetContentExcluded.style.display = '';
+            subsetTabExcluded.classList.add('active');
+            break;
+          case 'static':
+            subsetContentStatic.style.display = '';
+            subsetTabStatic.classList.add('active');
+            break;
+          case 'relationships':
+            subsetContentRelationships.style.display = '';
+            subsetTabRelationships.classList.add('active');
+            break;
+          case 'settings':
+            subsetContentSettings.style.display = '';
+            subsetTabSettings.classList.add('active');
+            break;
+          case 'preview':
+            subsetContentPreview.style.display = '';
+            subsetTabPreview.classList.add('active');
+            updateSubsetPreview();
+            break;
+        }
+      }
+
+      subsetTabStarting.addEventListener('click', () => setActiveSubsetTab('starting'));
+      subsetTabExcluded.addEventListener('click', () => setActiveSubsetTab('excluded'));
+      subsetTabStatic.addEventListener('click', () => setActiveSubsetTab('static'));
+      subsetTabRelationships.addEventListener('click', () => setActiveSubsetTab('relationships'));
+      subsetTabSettings.addEventListener('click', () => setActiveSubsetTab('settings'));
+      subsetTabPreview.addEventListener('click', () => setActiveSubsetTab('preview'));
+    }
+
+    // Starting Tables Functions
+    function addStartingTable() {
+      subsetStartingTables.push({
+        tableName: '',
+        schemaName: 'dbo',
+        filterClause: '',
+        forwardRelationshipsOnly: false
+      });
+      renderStartingTables();
+    }
+
+    function removeStartingTable(index) {
+      subsetStartingTables.splice(index, 1);
+      renderStartingTables();
+    }
+
+    function updateStartingTable(index, field, value) {
+      subsetStartingTables[index][field] = value;
+    }
+
+    function renderStartingTables() {
+      const container = document.getElementById('startingTablesContainer');
+      if (subsetStartingTables.length === 0) {
+        container.innerHTML = '<p style="color:#888; font-style:italic;">No starting tables defined yet. Click "Add Starting Table" to begin.</p>';
+        return;
+      }
+      container.innerHTML = subsetStartingTables.map((st, i) => `
+        <div class="custom-rule">
+          <div class="rule-header">
+            <div class="field-group" style="flex:1;">
+              <label>Schema</label>
+              <input type="text" value="${st.schemaName || 'dbo'}" placeholder="dbo"
+                     onchange="updateStartingTable(${i}, 'schemaName', this.value)">
+            </div>
+            <div class="field-group" style="flex:2;">
+              <label>Table Name</label>
+              <input type="text" value="${st.tableName || ''}" placeholder="e.g., Invoice"
+                     onchange="updateStartingTable(${i}, 'tableName', this.value)">
+            </div>
+            <button class="btn-remove-rule" onclick="removeStartingTable(${i})">Remove</button>
+          </div>
+          <div style="margin-top:12px;">
+            <label style="font-weight:600;">Filter Clause</label>
+            <input type="text" value="${st.filterClause || ''}" placeholder="e.g., WHERE InvoiceDate > '2024-01-01'"
+                   style="width:100%; padding:8px; margin-top:4px; border:1px solid #ccc; border-radius:4px;"
+                   onchange="updateStartingTable(${i}, 'filterClause', this.value)">
+          </div>
+          <div style="margin-top:12px;">
+            <label style="font-weight:600; cursor:pointer;">
+              <input type="checkbox" ${st.forwardRelationshipsOnly ? 'checked' : ''} 
+                     onchange="updateStartingTable(${i}, 'forwardRelationshipsOnly', this.checked)"
+                     style="margin-right:6px;">
+              Forward Relationships Only
+            </label>
+            <small style="color:#888; display:block; margin-top:4px;">Only include data that this table references, not data that references this table.</small>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Excluded Tables Functions
+    function addSubsetExcludedTable() {
+      subsetExcludedTables.push({ tableName: '', schemaName: 'dbo' });
+      renderSubsetExcludedTables();
+    }
+
+    function removeSubsetExcludedTable(index) {
+      subsetExcludedTables.splice(index, 1);
+      renderSubsetExcludedTables();
+    }
+
+    function updateSubsetExcludedTable(index, field, value) {
+      subsetExcludedTables[index][field] = value;
+    }
+
+    function renderSubsetExcludedTables() {
+      const container = document.getElementById('subsetExcludedTablesContainer');
+      if (subsetExcludedTables.length === 0) {
+        container.innerHTML = '<p style="color:#888; font-style:italic;">No excluded tables defined yet.</p>';
+        return;
+      }
+      container.innerHTML = subsetExcludedTables.map((et, i) => `
+        <div class="custom-rule" style="padding:12px;">
+          <div style="display:flex; gap:12px; align-items:flex-end;">
+            <div class="field-group" style="flex:1;">
+              <label>Schema</label>
+              <input type="text" value="${et.schemaName || 'dbo'}" placeholder="dbo"
+                     onchange="updateSubsetExcludedTable(${i}, 'schemaName', this.value)">
+            </div>
+            <div class="field-group" style="flex:2;">
+              <label>Table Name</label>
+              <input type="text" value="${et.tableName || ''}" placeholder="e.g., SystemLog"
+                     onchange="updateSubsetExcludedTable(${i}, 'tableName', this.value)">
+            </div>
+            <button class="btn-remove-rule" onclick="removeSubsetExcludedTable(${i})">Remove</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Static Data Tables Functions
+    function addStaticDataTable() {
+      subsetStaticDataTables.push({ tableName: '', schemaName: 'dbo' });
+      renderStaticDataTables();
+    }
+
+    function removeStaticDataTable(index) {
+      subsetStaticDataTables.splice(index, 1);
+      renderStaticDataTables();
+    }
+
+    function updateStaticDataTable(index, field, value) {
+      subsetStaticDataTables[index][field] = value;
+    }
+
+    function renderStaticDataTables() {
+      const container = document.getElementById('staticDataTablesContainer');
+      if (subsetStaticDataTables.length === 0) {
+        container.innerHTML = '<p style="color:#888; font-style:italic;">No static data tables defined yet.</p>';
+        return;
+      }
+      container.innerHTML = subsetStaticDataTables.map((st, i) => `
+        <div class="custom-rule" style="padding:12px;">
+          <div style="display:flex; gap:12px; align-items:flex-end;">
+            <div class="field-group" style="flex:1;">
+              <label>Schema</label>
+              <input type="text" value="${st.schemaName || 'dbo'}" placeholder="dbo"
+                     onchange="updateStaticDataTable(${i}, 'schemaName', this.value)">
+            </div>
+            <div class="field-group" style="flex:2;">
+              <label>Table Name</label>
+              <input type="text" value="${st.tableName || ''}" placeholder="e.g., Country"
+                     onchange="updateStaticDataTable(${i}, 'tableName', this.value)">
+            </div>
+            <button class="btn-remove-rule" onclick="removeStaticDataTable(${i})">Remove</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Manual Relationships Functions
+    function addManualRelationship() {
+      subsetManualRelationships.push({
+        sourceTableName: '',
+        sourceSchemaName: 'dbo',
+        sourceColumnNames: '',
+        targetTableName: '',
+        targetSchemaName: 'dbo',
+        targetColumnNames: ''
+      });
+      renderManualRelationships();
+    }
+
+    function removeManualRelationship(index) {
+      subsetManualRelationships.splice(index, 1);
+      renderManualRelationships();
+    }
+
+    function updateManualRelationship(index, field, value) {
+      subsetManualRelationships[index][field] = value;
+    }
+
+    function renderManualRelationships() {
+      const container = document.getElementById('manualRelationshipsContainer');
+      if (subsetManualRelationships.length === 0) {
+        container.innerHTML = '<p style="color:#888; font-style:italic;">No manual relationships defined yet.</p>';
+        return;
+      }
+      container.innerHTML = subsetManualRelationships.map((mr, i) => `
+        <div class="custom-rule">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <strong style="color:#c00;">Relationship ${i + 1}</strong>
+            <button class="btn-remove-rule" onclick="removeManualRelationship(${i})">Remove</button>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr auto 1fr; gap:16px; align-items:start;">
+            <div style="background:#f9f9f9; padding:12px; border-radius:6px;">
+              <strong style="color:#555; display:block; margin-bottom:8px;">Source (Child Table)</strong>
+              <div class="field-group">
+                <label>Schema</label>
+                <input type="text" value="${mr.sourceSchemaName || 'dbo'}" placeholder="dbo"
+                       onchange="updateManualRelationship(${i}, 'sourceSchemaName', this.value)">
+              </div>
+              <div class="field-group">
+                <label>Table Name</label>
+                <input type="text" value="${mr.sourceTableName || ''}" placeholder="e.g., TrackReview"
+                       onchange="updateManualRelationship(${i}, 'sourceTableName', this.value)">
+              </div>
+              <div class="field-group">
+                <label>Column Names</label>
+                <input type="text" value="${mr.sourceColumnNames || ''}" placeholder="e.g., TrackId or Col1,Col2"
+                       onchange="updateManualRelationship(${i}, 'sourceColumnNames', this.value)">
+                <small style="color:#888;">Comma-separated for composite keys</small>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; font-size:1.5em; color:#c00;">→</div>
+            <div style="background:#f9f9f9; padding:12px; border-radius:6px;">
+              <strong style="color:#555; display:block; margin-bottom:8px;">Target (Parent Table)</strong>
+              <div class="field-group">
+                <label>Schema</label>
+                <input type="text" value="${mr.targetSchemaName || 'dbo'}" placeholder="dbo"
+                       onchange="updateManualRelationship(${i}, 'targetSchemaName', this.value)">
+              </div>
+              <div class="field-group">
+                <label>Table Name</label>
+                <input type="text" value="${mr.targetTableName || ''}" placeholder="e.g., Track"
+                       onchange="updateManualRelationship(${i}, 'targetTableName', this.value)">
+              </div>
+              <div class="field-group">
+                <label>Column Names</label>
+                <input type="text" value="${mr.targetColumnNames || ''}" placeholder="e.g., TrackId or Col1,Col2"
+                       onchange="updateManualRelationship(${i}, 'targetColumnNames', this.value)">
+                <small style="color:#888;">Comma-separated for composite keys</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Generate Subset Options JSON
+    function generateSubsetOptionsJson() {
+      const options = {
+        jsonSchemaVersion: 1
+      };
+
+      // Add desiredSize if specified (mutually exclusive with startingTables)
+      const desiredSize = document.getElementById('subsetDesiredSize')?.value;
+      if (desiredSize) {
+        options.desiredSize = desiredSize;
+      }
+
+      // Add starting tables (only if no desiredSize)
+      if (!desiredSize && subsetStartingTables.length > 0) {
+        const validStartingTables = subsetStartingTables.filter(st => st.tableName);
+        if (validStartingTables.length > 0) {
+          options.startingTables = validStartingTables.map(st => {
+            const table = {
+              tableName: st.tableName,
+              schemaName: st.schemaName || 'dbo'
+            };
+            if (st.filterClause) {
+              table.filterClause = st.filterClause;
+            }
+            if (st.forwardRelationshipsOnly) {
+              table.forwardRelationshipsOnly = true;
+            }
+            return table;
+          });
+        }
+      }
+
+      // Add excluded tables
+      const validExcluded = subsetExcludedTables.filter(et => et.tableName);
+      if (validExcluded.length > 0) {
+        options.excludedTables = validExcluded.map(et => ({
+          tableName: et.tableName,
+          schemaName: et.schemaName || 'dbo'
+        }));
+      }
+
+      // Add static data tables
+      const validStatic = subsetStaticDataTables.filter(st => st.tableName);
+      if (validStatic.length > 0) {
+        options.staticDataTables = validStatic.map(st => ({
+          tableName: st.tableName,
+          schemaName: st.schemaName || 'dbo'
+        }));
+      }
+
+      // Add manual relationships
+      const validRelationships = subsetManualRelationships.filter(mr => 
+        mr.sourceTableName && mr.targetTableName && mr.sourceColumnNames && mr.targetColumnNames
+      );
+      if (validRelationships.length > 0) {
+        options.manualRelationships = validRelationships.map(mr => ({
+          sourceTableName: mr.sourceTableName,
+          sourceSchemaName: mr.sourceSchemaName || 'dbo',
+          sourceColumnNames: mr.sourceColumnNames.split(',').map(c => c.trim()),
+          targetTableName: mr.targetTableName,
+          targetSchemaName: mr.targetSchemaName || 'dbo',
+          targetColumnNames: mr.targetColumnNames.split(',').map(c => c.trim())
+        }));
+      }
+
+      // Add includeTablesRowThreshold
+      const rowThreshold = document.getElementById('subsetRowThreshold')?.value;
+      if (rowThreshold !== undefined && rowThreshold !== '' && rowThreshold !== '300') {
+        options.includeTablesRowThreshold = parseInt(rowThreshold, 10);
+      }
+
+      // Add useTemporaryTables
+      const useTempTables = document.getElementById('subsetUseTempTables')?.checked;
+      if (useTempTables) {
+        options.useTemporaryTables = true;
+      }
+
+      return options;
+    }
+
+    // Update Subset Preview
+    function updateSubsetPreview() {
+      const preview = document.getElementById('subsetOptionsPreview');
+      if (preview) {
+        const options = generateSubsetOptionsJson();
+        preview.textContent = JSON.stringify(options, null, 2);
+      }
+    }
+
+    // Copy Subset Options to Clipboard
+    function copySubsetOptionsToClipboard() {
+      const options = generateSubsetOptionsJson();
+      const text = JSON.stringify(options, null, 2);
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Subset options copied to clipboard!');
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+      });
+    }
+
+    // Download Subset Options File
+    function downloadSubsetOptionsFile() {
+      const options = generateSubsetOptionsJson();
+      const text = JSON.stringify(options, null, 2);
+      const blob = new Blob([text], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'subset-options.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // ============================================
+    // Export All Files as ZIP
+    // ============================================
+    
+    async function exportAllAsZip() {
+      if (typeof JSZip === 'undefined') {
+        alert('JSZip library not loaded. Please check your internet connection and refresh the page.');
+        return;
+      }
+
+      const zip = new JSZip();
+      const timestamp = new Date().toISOString().slice(0,10).replace(/-/g,'');
+      let filesAdded = 0;
+
+      // Add classification.json (with any pending changes applied)
+      if (data && tables && tables.length > 0) {
+        const classificationOutput = JSON.parse(JSON.stringify(data));
+        // Apply pending changes
+        for (const key in pendingChanges.classification) {
+          const [tableName, colName] = key.split('.');
+          const change = pendingChanges.classification[key];
+          const table = classificationOutput.tables.find(t => t.name === tableName);
+          if (table) {
+            const col = table.columns.find(c => c.name === colName);
+            if (col) {
+              col.type = change.newValue || null;
+              if (!col.type) delete col.type;
+            }
+          }
+        }
+        zip.file('classification.json', JSON.stringify(classificationOutput, null, 2));
+        filesAdded++;
+      }
+
+      // Add masking.json (with any pending changes applied)
+      if (maskingData && maskingTables && maskingTables.length > 0) {
+        const maskingOutput = JSON.parse(JSON.stringify(maskingData));
+        // Apply pending changes
+        for (const key in pendingChanges.masking) {
+          const parts = key.split('.');
+          const field = parts.pop();
+          const colName = parts.pop();
+          const tableName = parts.join('.');
+          const change = pendingChanges.masking[key];
+          const table = maskingOutput.tables.find(t => t.name === tableName);
+          if (table) {
+            const col = table.columns.find(c => c.name === colName);
+            if (col) {
+              if (field === 'dataset') {
+                col.dataset = change.newValue || null;
+                if (!col.dataset) delete col.dataset;
+              } else if (field === 'deterministic') {
+                col.deterministic = change.newValue;
+                if (col.deterministic === null || col.deterministic === undefined) delete col.deterministic;
+              }
+            }
+          }
+        }
+        zip.file('masking.json', JSON.stringify(maskingOutput, null, 2));
+        filesAdded++;
+      }
+
+      // Add masking-options.json if there's any configuration
+      const optionsJson = generateOptionsJson();
+      const optionsKeys = Object.keys(optionsJson);
+      // Only include if there's more than just the schema version
+      if (optionsKeys.length > 1 || (optionsKeys.length === 1 && optionsKeys[0] !== 'jsonSchemaVersion')) {
+        zip.file('masking-options.json', JSON.stringify(optionsJson, null, 2));
+        filesAdded++;
+      }
+
+      // Add subset-options.json if there's any configuration
+      const subsetOptionsJson = generateSubsetOptionsJson();
+      const subsetKeys = Object.keys(subsetOptionsJson);
+      // Only include if there's more than just the schema version
+      if (subsetKeys.length > 1) {
+        zip.file('subset-options.json', JSON.stringify(subsetOptionsJson, null, 2));
+        filesAdded++;
+      }
+
+      if (filesAdded === 0) {
+        alert('No files to export. Please upload classification/masking JSON files or configure options first.');
+        return;
+      }
+
+      // Generate and download ZIP
+      try {
+        const content = await zip.generateAsync({ type: 'blob' });
+        const url = URL.createObjectURL(content);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `tdm-config-${timestamp}.zip`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        // Show summary
+        const fileList = [];
+        if (data) fileList.push('classification.json');
+        if (maskingData) fileList.push('masking.json');
+        if (optionsKeys.length > 1) fileList.push('masking-options.json');
+        if (subsetKeys.length > 1) fileList.push('subset-options.json');
+        
+        alert(`Exported ${filesAdded} file(s) to tdm-config-${timestamp}.zip:\n\n• ${fileList.join('\n• ')}`);
+      } catch (err) {
+        console.error('Failed to generate ZIP:', err);
+        alert('Failed to generate ZIP file. See console for details.');
+      }
+    }
+
+    // Initialize Export All button
+    document.addEventListener('DOMContentLoaded', function() {
+      const exportAllBtn = document.getElementById('exportAllBtn');
+      if (exportAllBtn) {
+        exportAllBtn.onclick = exportAllAsZip;
+      }
+    });
   </script>
 </body>
 </html>
