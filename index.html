@@ -843,6 +843,30 @@
           <label for="maskingFile" style="font-weight:600;color:#c00;">Select masking.json: </label>
           <input type="file" id="maskingFile" accept="application/json">
         </div>
+        
+        <!-- Optional Options Files Section -->
+        <div style="margin-top:32px; padding-top:24px; border-top:2px dashed #ddd;">
+          <h3 style="color:#666; margin-bottom:16px;">Optional: Import Existing Options Files</h3>
+          <p style="color:#888; font-size:0.95em; margin-bottom:16px;">
+            If you have existing options files, upload them here to edit their configuration in the Options tabs.
+          </p>
+          <div style="display:flex; gap:24px; justify-content:center; flex-wrap:wrap;">
+            <div style="background:#f9f9f9; padding:16px 20px; border-radius:8px; border:1px solid #e0e0e0;">
+              <label for="maskingOptionsFile" style="font-weight:600;color:#c00; display:block; margin-bottom:8px;">
+                Import masking-options.json:
+              </label>
+              <input type="file" id="maskingOptionsFile" accept="application/json">
+              <div id="maskingOptionsStatus" style="margin-top:8px; font-size:0.9em;"></div>
+            </div>
+            <div style="background:#f9f9f9; padding:16px 20px; border-radius:8px; border:1px solid #e0e0e0;">
+              <label for="subsetOptionsFile" style="font-weight:600;color:#c00; display:block; margin-bottom:8px;">
+                Import subset-options.json:
+              </label>
+              <input type="file" id="subsetOptionsFile" accept="application/json">
+              <div id="subsetOptionsStatus" style="margin-top:8px; font-size:0.9em;"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div id="tabContentSubset" style="display:none;">
@@ -2023,6 +2047,267 @@
       a.click();
       setTimeout(function() { document.body.removeChild(a); }, 100);
     };
+
+    // ===== Import Options Files Functionality =====
+    
+    // Parse and load masking-options.json
+    function loadMaskingOptionsFile(jsonData) {
+      try {
+        // Reset optionsState
+        optionsState.builtInRules = {};
+        optionsState.customRules = [];
+        optionsState.customDatasets = [];
+        optionsState.excludeTables = [];
+        optionsState.excludeColumns = [];
+        optionsState.overrideColumns = [];
+
+        // Initialize all built-in rules as enabled (will override below if specified)
+        allBuiltInClassificationTypes.forEach(type => {
+          optionsState.builtInRules[type] = true;
+        });
+
+        // Parse classifications
+        if (jsonData.classifications) {
+          // Handle built-in rules
+          if (jsonData.classifications.builtIn) {
+            const builtIn = jsonData.classifications.builtIn;
+            if (builtIn.disabled && Array.isArray(builtIn.disabled)) {
+              builtIn.disabled.forEach(type => {
+                if (optionsState.builtInRules.hasOwnProperty(type)) {
+                  optionsState.builtInRules[type] = false;
+                }
+              });
+            }
+            // If only enabled is specified, disable all others
+            if (builtIn.enabled && Array.isArray(builtIn.enabled) && !builtIn.disabled) {
+              allBuiltInClassificationTypes.forEach(type => {
+                optionsState.builtInRules[type] = builtIn.enabled.includes(type);
+              });
+            }
+          }
+
+          // Handle custom rules
+          if (jsonData.classifications.custom && Array.isArray(jsonData.classifications.custom)) {
+            optionsState.customRules = jsonData.classifications.custom.map(rule => ({
+              type: rule.type || '',
+              confidence: rule.confidence || 'High',
+              condition: rule.condition || ''
+            }));
+          }
+        }
+
+        // Parse datasets
+        if (jsonData.datasets && Array.isArray(jsonData.datasets)) {
+          optionsState.customDatasets = jsonData.datasets.map(ds => {
+            const dataset = {
+              name: ds.name || '',
+              type: ds.type || 'List'
+            };
+            switch (ds.type) {
+              case 'List':
+                dataset.values = Array.isArray(ds.values) ? ds.values.join(', ') : '';
+                break;
+              case 'Expression':
+                dataset.expression = ds.expression || '';
+                break;
+              case 'Conditional':
+                dataset.conditions = ds.conditions ? JSON.stringify(ds.conditions, null, 2) : '';
+                break;
+              case 'File':
+                dataset.file = ds.file || '';
+                break;
+            }
+            return dataset;
+          });
+        }
+
+        // Parse tables (exclusions and overrides)
+        if (jsonData.tables && Array.isArray(jsonData.tables)) {
+          jsonData.tables.forEach(table => {
+            const schema = table.schema || 'dbo';
+            const tableName = table.name || '';
+
+            // Table-level exclusion
+            if (table.exclude === true) {
+              optionsState.excludeTables.push({ schema, name: tableName });
+            }
+
+            // Column-level configurations
+            if (table.columns && Array.isArray(table.columns)) {
+              table.columns.forEach(col => {
+                if (col.exclude === true) {
+                  optionsState.excludeColumns.push({
+                    schema,
+                    tableName,
+                    columnName: col.name || ''
+                  });
+                }
+                if (col.type) {
+                  optionsState.overrideColumns.push({
+                    schema,
+                    tableName,
+                    columnName: col.name || '',
+                    type: col.type
+                  });
+                }
+              });
+            }
+          });
+        }
+
+        // Re-render all options UI
+        renderBuiltInRules();
+        renderCustomRules();
+        renderCustomDatasets();
+        renderExcludeTables();
+        renderExcludeColumns();
+        renderOverrideColumns();
+        updateOptionsPreview();
+
+        return { success: true };
+      } catch (err) {
+        console.error('Error parsing masking-options.json:', err);
+        return { success: false, error: err.message };
+      }
+    }
+
+    // Parse and load subset-options.json
+    function loadSubsetOptionsFile(jsonData) {
+      try {
+        // Reset subset state
+        subsetStartingTables = [];
+        subsetExcludedTables = [];
+        subsetStaticDataTables = [];
+        subsetManualRelationships = [];
+
+        // Parse startingTables
+        if (jsonData.startingTables && Array.isArray(jsonData.startingTables)) {
+          subsetStartingTables = jsonData.startingTables.map(st => ({
+            tableName: st.tableName || '',
+            schemaName: st.schemaName || 'dbo',
+            filterClause: st.filterClause || '',
+            forwardRelationshipsOnly: st.forwardRelationshipsOnly || false
+          }));
+        }
+
+        // Parse excludedTables
+        if (jsonData.excludedTables && Array.isArray(jsonData.excludedTables)) {
+          subsetExcludedTables = jsonData.excludedTables.map(et => ({
+            tableName: et.tableName || '',
+            schemaName: et.schemaName || 'dbo'
+          }));
+        }
+
+        // Parse staticDataTables
+        if (jsonData.staticDataTables && Array.isArray(jsonData.staticDataTables)) {
+          subsetStaticDataTables = jsonData.staticDataTables.map(st => ({
+            tableName: st.tableName || '',
+            schemaName: st.schemaName || 'dbo'
+          }));
+        }
+
+        // Parse manualRelationships
+        if (jsonData.manualRelationships && Array.isArray(jsonData.manualRelationships)) {
+          subsetManualRelationships = jsonData.manualRelationships.map(mr => ({
+            sourceTableName: mr.sourceTableName || '',
+            sourceSchemaName: mr.sourceSchemaName || 'dbo',
+            sourceColumnNames: Array.isArray(mr.sourceColumnNames) ? mr.sourceColumnNames.join(', ') : '',
+            targetTableName: mr.targetTableName || '',
+            targetSchemaName: mr.targetSchemaName || 'dbo',
+            targetColumnNames: Array.isArray(mr.targetColumnNames) ? mr.targetColumnNames.join(', ') : ''
+          }));
+        }
+
+        // Parse settings
+        if (jsonData.desiredSize) {
+          const desiredSizeEl = document.getElementById('subsetDesiredSize');
+          if (desiredSizeEl) desiredSizeEl.value = jsonData.desiredSize;
+        }
+
+        if (jsonData.includeTablesRowThreshold !== undefined) {
+          const thresholdEl = document.getElementById('subsetRowThreshold');
+          if (thresholdEl) thresholdEl.value = jsonData.includeTablesRowThreshold;
+        }
+
+        if (jsonData.useTemporaryTables) {
+          const tempTablesEl = document.getElementById('subsetUseTempTables');
+          if (tempTablesEl) tempTablesEl.checked = true;
+        }
+
+        // Re-render all subset UI
+        renderStartingTables();
+        renderSubsetExcludedTables();
+        renderStaticDataTables();
+        renderManualRelationships();
+        updateSubsetPreview();
+
+        return { success: true };
+      } catch (err) {
+        console.error('Error parsing subset-options.json:', err);
+        return { success: false, error: err.message };
+      }
+    }
+
+    // Initialize options file upload handlers
+    document.addEventListener('DOMContentLoaded', function() {
+      // Masking options file upload
+      const maskingOptionsInput = document.getElementById('maskingOptionsFile');
+      if (maskingOptionsInput) {
+        maskingOptionsInput.addEventListener('change', function(e) {
+          const file = e.target.files[0];
+          if (!file) return;
+          
+          const statusEl = document.getElementById('maskingOptionsStatus');
+          const reader = new FileReader();
+          
+          reader.onload = function(event) {
+            try {
+              const jsonData = JSON.parse(event.target.result);
+              const result = loadMaskingOptionsFile(jsonData);
+              
+              if (result.success) {
+                statusEl.innerHTML = '<span style="color:#090;">✓ Loaded successfully! Check the Masking Options tab.</span>';
+              } else {
+                statusEl.innerHTML = `<span style="color:#c00;">✗ Error: ${result.error}</span>`;
+              }
+            } catch (err) {
+              statusEl.innerHTML = `<span style="color:#c00;">✗ Invalid JSON: ${err.message}</span>`;
+            }
+          };
+          
+          reader.readAsText(file);
+        });
+      }
+
+      // Subset options file upload
+      const subsetOptionsInput = document.getElementById('subsetOptionsFile');
+      if (subsetOptionsInput) {
+        subsetOptionsInput.addEventListener('change', function(e) {
+          const file = e.target.files[0];
+          if (!file) return;
+          
+          const statusEl = document.getElementById('subsetOptionsStatus');
+          const reader = new FileReader();
+          
+          reader.onload = function(event) {
+            try {
+              const jsonData = JSON.parse(event.target.result);
+              const result = loadSubsetOptionsFile(jsonData);
+              
+              if (result.success) {
+                statusEl.innerHTML = '<span style="color:#090;">✓ Loaded successfully! Check the Subset Options tab.</span>';
+              } else {
+                statusEl.innerHTML = `<span style="color:#c00;">✗ Error: ${result.error}</span>`;
+              }
+            } catch (err) {
+              statusEl.innerHTML = `<span style="color:#c00;">✗ Invalid JSON: ${err.message}</span>`;
+            }
+          };
+          
+          reader.readAsText(file);
+        });
+      }
+    });
 
     // ===== Classification Options Tab Functionality =====
     
