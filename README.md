@@ -27,17 +27,34 @@ A browser-based tool for viewing, editing, and managing TDM (Test Data Managemen
 - **Export Modified Files**: Download updated classification.json and masking.json files
 
 ### Advanced Options
-- **Subset Options Builder**: Configure starting tables, excluded tables, static data tables, manual relationships, and settings for the TDM `rgsubset` command
-- **Masking Options Builder**: Configure built-in rules, custom classification rules, custom datasets, table/column exclusions, and column overrides
-- **Preview & Export**: See JSON preview before downloading options files
-- **Import Existing Options**: Load existing masking-options.json and subset-options.json files for editing
+
+#### Masking Options Builder
+- **Built-in Rules**: Enable/disable default classification rules
+- **Custom Classification Rules**: Create rules based on column name patterns
+- **Custom Datasets**: Define List, Expression, Conditional, or File-based datasets
+- **Expression Builder Wizard**: Visual wizard for building expression-based datasets with:
+  - Column name lookup from your classification.json
+  - Quick-add buttons for common datasets (GivenNames, FamilyNames, Domains, etc.)
+  - Live syntax-highlighted preview
+  - Support for deterministic and non-deterministic expressions
+- **Table/Column Exclusions**: Exclude specific tables or columns from classification
+- **Column Overrides**: Force specific classification types for columns
+
+#### Subset Options Builder
+- **Starting Tables**: Define tables and filter clauses for subsetting
+- **Excluded Tables**: Tables to ignore during subsetting
+- **Static Data Tables**: Reference/lookup tables to include fully
+- **Manual Relationships**: Define relationships not in database FKs
+- **Settings**: Configure desired size, row thresholds, temp tables
+- **Validation**: Warnings for mutually exclusive options (desiredSize vs startingTables)
 
 ### Additional Features
 - **Welcome Tab**: Getting started guide for new users
 - **Session Persistence**: Uploaded files are remembered in browser session storage
 - **Export All (ZIP)**: Download all JSON files as a single ZIP archive
 - **Forget All Files**: Clear session and start fresh with new files
-- **Potential Key Detection**: Automatically identifies likely primary/foreign key columns
+- **Preview & Export**: See JSON preview before downloading options files
+- **Import Existing Options**: Load existing masking-options.json and subset-options.json files for editing
 
 ## Getting Started
 
@@ -47,6 +64,23 @@ A browser-based tool for viewing, editing, and managing TDM (Test Data Managemen
 4. Use the **Classification** and **Masking Map** tabs to view and edit your data
 5. Use the **Advanced Options** tab to build subset-options.json and masking-options.json files
 6. Download your modified files using the Save/Export buttons
+
+## Expression Builder Wizard
+
+The Expression Builder Wizard helps you create expression-based datasets for realistic masked data. For example, creating email addresses that combine masked first and last names:
+
+```
+$(GivenNames($[FirstName])).$(FamilyNames($[LastName]))@$(Domains)
+```
+
+This produces realistic emails like: `anne.example@red-gate.com`
+
+### Wizard Features:
+- **Column Dropdown**: Automatically populated from your classification.json
+- **Quick-Add Buttons**: Common datasets and columns available with one click
+- **Live Preview**: Syntax-highlighted expression preview as you build
+- **Component Management**: Add, remove, and reorder expression components
+- **Deterministic Support**: Optionally link datasets to columns for consistent masking
 
 ## Sample Files
 

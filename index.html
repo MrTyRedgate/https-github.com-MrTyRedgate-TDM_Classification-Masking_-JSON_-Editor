@@ -625,7 +625,7 @@
       box-shadow: 0 8px 32px rgba(0,0,0,0.3);
     }
     .expr-wizard-header {
-      background: linear-gradient(135deg, #c00 0%, #900 100%);
+      background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
       color: #fff;
       padding: 18px 24px;
       display: flex;
@@ -714,11 +714,11 @@
     }
     .expr-input-row input:focus, .expr-input-row select:focus {
       outline: none;
-      border-color: #c00;
-      box-shadow: 0 0 0 2px rgba(204,0,0,0.1);
+      border-color: #1565c0;
+      box-shadow: 0 0 0 2px rgba(21,101,192,0.15);
     }
     .expr-btn-add {
-      background: #c00;
+      background: #1565c0;
       color: #fff;
       border: none;
       padding: 8px 16px;
@@ -729,7 +729,7 @@
       transition: background 0.2s;
     }
     .expr-btn-add:hover {
-      background: #a00;
+      background: #0d47a1;
     }
     .expr-btn-secondary {
       background: #666;
@@ -833,15 +833,15 @@
     }
     
     .expr-help-section {
-      background: #fffde7;
-      border: 1px solid #fff59d;
+      background: #e3f2fd;
+      border: 1px solid #90caf9;
       border-radius: 8px;
       padding: 16px;
       margin-top: 16px;
     }
     .expr-help-section h4 {
       margin: 0 0 10px 0;
-      color: #f9a825;
+      color: #1565c0;
       font-size: 0.95em;
     }
     .expr-help-section code {
@@ -905,8 +905,8 @@
     
     .wizard-icon-btn {
       background: none;
-      border: 1px solid #c00;
-      color: #c00;
+      border: 1px solid #1565c0;
+      color: #1565c0;
       padding: 4px 8px;
       border-radius: 4px;
       cursor: pointer;
@@ -918,7 +918,7 @@
       gap: 4px;
     }
     .wizard-icon-btn:hover {
-      background: #c00;
+      background: #1565c0;
       color: #fff;
     }
   </style>
@@ -1573,13 +1573,19 @@
           <!-- Column Reference Section -->
           <div class="expr-component-section">
             <h4><span class="icon">📋</span> Column Reference</h4>
-            <p style="color:#666; font-size:0.8em; margin:0 0 10px 0;">Reference the unmasked value of another column.</p>
+            <p style="color:#666; font-size:0.8em; margin:0 0 10px 0;">Reference the unmasked value of another column from your classification data.</p>
             <div class="expr-input-row">
-              <input type="text" id="exprColumnName" placeholder="e.g., FirstName, LastName">
+              <select id="exprColumnSelect" style="flex:2;">
+                <option value="">-- Select a column --</option>
+              </select>
+              <button class="expr-btn-add" onclick="addExprColumnFromSelect()">Add</button>
+            </div>
+            <div class="expr-input-row" style="margin-top:4px;">
+              <input type="text" id="exprColumnName" placeholder="Or type custom column name">
               <button class="expr-btn-add" onclick="addExprColumn()">Add</button>
             </div>
             <div class="expr-quick-datasets" style="margin-top:8px;" id="exprQuickColumns">
-              <span style="color:#888; font-size:0.8em;">Enter column names from your table</span>
+              <!-- Quick column buttons populated from classification.json -->
             </div>
           </div>
         </div>
@@ -3713,12 +3719,89 @@
         exprWizardComponents = parseExpressionToComponents(currentExpr);
       }
       
+      // Populate column names from classification.json
+      populateWizardColumnNames();
+      
       const modal = document.getElementById('exprWizardModal');
       if (modal) {
         modal.classList.add('visible');
         updateExpressionPreview();
         renderExpressionComponents();
       }
+    }
+    
+    function populateWizardColumnNames() {
+      const select = document.getElementById('exprColumnSelect');
+      const quickContainer = document.getElementById('exprQuickColumns');
+      
+      // Gather all unique column names from classification data
+      const columnNames = new Set();
+      if (data && data.tables) {
+        data.tables.forEach(table => {
+          if (table.columns) {
+            table.columns.forEach(col => {
+              if (col.name) columnNames.add(col.name);
+            });
+          }
+        });
+      }
+      
+      // Sort column names alphabetically
+      const sortedColumns = Array.from(columnNames).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+      
+      // Populate select dropdown
+      if (select) {
+        select.innerHTML = '<option value="">-- Select a column --</option>';
+        sortedColumns.forEach(colName => {
+          const option = document.createElement('option');
+          option.value = colName;
+          option.textContent = colName;
+          select.appendChild(option);
+        });
+      }
+      
+      // Populate quick buttons (limit to common/likely useful columns)
+      if (quickContainer) {
+        if (sortedColumns.length === 0) {
+          quickContainer.innerHTML = '<span style="color:#888; font-size:0.8em;">Upload classification.json to see available columns</span>';
+        } else {
+          // Show first 12 columns as quick buttons
+          const quickColumns = sortedColumns.slice(0, 12);
+          quickContainer.innerHTML = quickColumns.map(col => 
+            `<button class="expr-quick-btn column" onclick="addExprColumnValue('${escapeHtml(col)}')">${escapeHtml(col)}</button>`
+          ).join('');
+          
+          if (sortedColumns.length > 12) {
+            quickContainer.innerHTML += `<span style="color:#888; font-size:0.75em; margin-left:8px;">+${sortedColumns.length - 12} more in dropdown</span>`;
+          }
+        }
+      }
+    }
+    
+    function addExprColumnFromSelect() {
+      const select = document.getElementById('exprColumnSelect');
+      if (!select || !select.value) {
+        alert('Please select a column from the dropdown');
+        return;
+      }
+      
+      exprWizardComponents.push({
+        type: 'column',
+        name: select.value
+      });
+      
+      select.value = '';
+      updateExpressionPreview();
+      renderExpressionComponents();
+    }
+    
+    function addExprColumnValue(colName) {
+      exprWizardComponents.push({
+        type: 'column',
+        name: colName
+      });
+      updateExpressionPreview();
+      renderExpressionComponents();
     }
     
     function closeExpressionWizard() {
